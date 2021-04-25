@@ -15,6 +15,7 @@ public class Player : MonoBehaviour
 {
     public float speed = 2;
     public float boostMultiplier = 5;
+
     public GameObject projectile;
 
     [SerializeField]
@@ -32,6 +33,13 @@ public class Player : MonoBehaviour
     private Directions verticalFlag;
 
     private bool boostActivated = false;
+
+    private SpawnManager _spawnManager;
+
+    void Start()
+    {
+        _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
+    }
 
     // Update is called once per frame
     void Update()
@@ -105,6 +113,7 @@ public class Player : MonoBehaviour
 
         if (lives <= 0)
         {
+            _spawnManager.StopSpawning();
             Destroy(this.gameObject);
         }
     }
