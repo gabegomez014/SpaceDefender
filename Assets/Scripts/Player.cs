@@ -69,7 +69,7 @@ public class Player : MonoBehaviour
         if (currentCoolDownTimer <= 0)
         {
             Vector3 spawnLocation = transform.position;
-            spawnLocation.y += 0.9f;
+            spawnLocation.y += 1.05f;
             Instantiate(projectile, spawnLocation, Quaternion.identity);
             currentCoolDownTimer += cooldownTime;
         }
