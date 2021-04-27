@@ -6,9 +6,13 @@ public class SpawnManager : MonoBehaviour
 {
     [SerializeField]
     private GameObject _enemy;
+    [SerializeField]
+    private GameObject _tripleShotPowerup;
 
     [SerializeField]
     private Transform _enemyHolder;
+    [SerializeField]
+    private Transform _powerupHolder;
 
     [SerializeField]
     private float _spawnRate = 3;
@@ -24,6 +28,18 @@ public class SpawnManager : MonoBehaviour
     void Start()
     {
         StartCoroutine(SpawnEnemies());
+        StartCoroutine(SpawnPowerups());
+    }
+
+    IEnumerator SpawnPowerups()
+    {
+        while (_keepSpawning)
+        {
+            float waitTime = Random.Range(3, 7);
+            Vector3 spawnPos = new Vector3(Random.Range(_leftBound, _rightBound), _topBound);
+            Instantiate(_tripleShotPowerup, spawnPos, Quaternion.identity, _powerupHolder);
+            yield return new WaitForSeconds(waitTime);
+        }
     }
 
     IEnumerator SpawnEnemies() 
@@ -40,6 +56,11 @@ public class SpawnManager : MonoBehaviour
     {
         _keepSpawning = false;
         foreach (Transform child in _enemyHolder)
+        {
+            Destroy(child.gameObject);
+        }
+
+        foreach (Transform child in _powerupHolder)
         {
             Destroy(child.gameObject);
         }

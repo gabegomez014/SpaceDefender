@@ -31,20 +31,18 @@ public class Enemy : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("Collided with " + other.tag);
-
         if (other.tag == "Laser")
         {
             ProjectileBehavior laser = other.GetComponent<ProjectileBehavior>();
             laser.EnemyHit();
+            Destroy(this.gameObject);
         }
 
         else if (other.tag == "Player")
         {
             Player player = other.GetComponent<Player>();
             player.HitByEnemy();
+            Destroy(this.gameObject);
         }
-
-        Destroy(this.gameObject);
     }
 }

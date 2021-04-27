@@ -17,22 +17,24 @@ public class Player : MonoBehaviour
     public float boostMultiplier = 5;
 
     public GameObject projectile;
+    public GameObject tripleShotPrefab;
 
     [SerializeField]
-    private float cooldownTime = 0.1f;
-    private float currentCoolDownTimer = 0;
+    private float _cooldownTime = 0.1f;
+    private float _currentCoolDownTimer = 0;
 
-    private int lives = 3;
+    private int _lives = 3;
 
-    private float topBounds = 0;
-    private float bottomBounds = -4;
-    private float rightBounds = 9.3f;
-    private float leftBounds = -9.3f;
+    private float _topBounds = 0;
+    private float _bottomBounds = -4;
+    private float _rightBounds = 9.3f;
+    private float _leftBounds = -9.3f;
 
-    private Directions horizontalFlag;
-    private Directions verticalFlag;
+    private Directions _horizontalFlag;
+    private Directions _verticalFlag;
 
-    private bool boostActivated = false;
+    private bool _boostActivated = false;
+    private bool _tripleShotActivated = false;
 
     private SpawnManager _spawnManager;
 
@@ -47,15 +49,15 @@ public class Player : MonoBehaviour
         // Code to switch boostActivated boolean
         if ( Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift) )
         {
-            boostActivated = true;
+            _boostActivated = true;
         }
 
-        else { boostActivated = false; }
+        else { _boostActivated = false; }
 
         // Checking all cooldown related aspects for shooting projectiles
-        if (currentCoolDownTimer > 0)
+        if (_currentCoolDownTimer > 0)
         {
-            currentCoolDownTimer -= Time.deltaTime;
+            _currentCoolDownTimer -= Time.deltaTime;
         }
 
         if (Input.GetKey(KeyCode.Space)) { Shoot(); }
@@ -66,12 +68,24 @@ public class Player : MonoBehaviour
 
     void Shoot()
     {
-        if (currentCoolDownTimer <= 0)
+        if (_currentCoolDownTimer <= 0)
         {
             Vector3 spawnLocation = transform.position;
             spawnLocation.y += 1.05f;
-            Instantiate(projectile, spawnLocation, Quaternion.identity);
-            currentCoolDownTimer += cooldownTime;
+
+            if (_tripleShotActivated)
+            {
+                // Instantiate triple shot
+                spawnLocation.x = spawnLocation.x - 0.5f;
+                Instantiate(tripleShotPrefab, spawnLocation, Quaternion.identity);
+            }
+
+            else
+            {
+                Instantiate(projectile, spawnLocation, Quaternion.identity);
+            }
+
+            _currentCoolDownTimer += _cooldownTime;
         }
     }
 
@@ -82,39 +96,51 @@ public class Player : MonoBehaviour
         // Move the GameObject up or down based off User Input if we are not at the bounds already
         Vector3 direction = new Vector3(horizontalInput, verticalInput, 0);
 
-        if (boostActivated)
+        if (_boostActivated)
         {
             direction = direction * boostMultiplier;
         } 
 
-        if (horizontalFlag == Directions.RIGHT && horizontalInput > 0) { direction.x = 0; }
-        else if (horizontalFlag == Directions.LEFT && horizontalInput < 0) { direction.x = 0; }
-        if (verticalFlag == Directions.UP && verticalInput > 0) { direction.y = 0; }
-        else if (verticalFlag == Directions.DOWN && verticalInput < 0) { direction.y = 0; }
+        if (_horizontalFlag == Directions.RIGHT && horizontalInput > 0) { direction.x = 0; }
+        else if (_horizontalFlag == Directions.LEFT && horizontalInput < 0) { direction.x = 0; }
+        if (_verticalFlag == Directions.UP && verticalInput > 0) { direction.y = 0; }
+        else if (_verticalFlag == Directions.DOWN && verticalInput < 0) { direction.y = 0; }
 
         transform.Translate(direction * Time.deltaTime * speed);
 
-        if (transform.position.y >= topBounds) { verticalFlag = Directions.UP; }
+        if (transform.position.y >= _topBounds) { _verticalFlag = Directions.UP; }
 
-        else if (transform.position.y <= bottomBounds) { verticalFlag = Directions.DOWN; }
+        else if (transform.position.y <= _bottomBounds) { _verticalFlag = Directions.DOWN; }
 
-        else { verticalFlag = Directions.CLEAR; }
+        else { _verticalFlag = Directions.CLEAR; }
 
-        if (transform.position.x >= rightBounds) {   horizontalFlag = Directions.RIGHT; }
+        if (transform.position.x >= _rightBounds) {   _horizontalFlag = Directions.RIGHT; }
 
-        else if (transform.position.x <= leftBounds) { horizontalFlag = Directions.LEFT; }
+        else if (transform.position.x <= _leftBounds) { _horizontalFlag = Directions.LEFT; }
 
-        else { horizontalFlag = Directions.CLEAR; }
+        else { _horizontalFlag = Directions.CLEAR; }
     }
 
     public void HitByEnemy()
     {
-        lives -= 1;
+        _lives -= 1;
 
-        if (lives <= 0)
+        if (_lives <= 0)
         {
             _spawnManager.StopSpawning();
             Destroy(this.gameObject);
         }
+    }
+
+    public void PowerupCollected()
+    {
+        _tripleShotActivated = true;
+        StartCoroutine(TripleShotPowerDownRoutine());
+    }
+
+    IEnumerator TripleShotPowerDownRoutine()
+    {
+        yield return new WaitForSeconds(5);
+        _tripleShotActivated = false;
     }
 }
