@@ -20,6 +20,9 @@ public class Player : MonoBehaviour
     public GameObject tripleShotPrefab;
 
     [SerializeField]
+    private float speedPowerupMultiplier = 5;
+
+    [SerializeField]
     private float _cooldownTime = 0.1f;
     private float _currentCoolDownTimer = 0;
 
@@ -35,6 +38,7 @@ public class Player : MonoBehaviour
 
     private bool _boostActivated = false;
     private bool _tripleShotActivated = false;
+    private bool _speedPowerupActivated = false;
 
     private SpawnManager _spawnManager;
 
@@ -101,6 +105,11 @@ public class Player : MonoBehaviour
             direction = direction * boostMultiplier;
         } 
 
+        if (_speedPowerupActivated)
+        {
+            direction = direction * speedPowerupMultiplier;
+        }
+
         if (_horizontalFlag == Directions.RIGHT && horizontalInput > 0) { direction.x = 0; }
         else if (_horizontalFlag == Directions.LEFT && horizontalInput < 0) { direction.x = 0; }
         if (_verticalFlag == Directions.UP && verticalInput > 0) { direction.y = 0; }
@@ -132,15 +141,31 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void PowerupCollected()
+    public void PowerupCollected(PowerupType powerupType)
     {
-        _tripleShotActivated = true;
-        StartCoroutine(TripleShotPowerDownRoutine());
+        if (powerupType == PowerupType.TRIPLESHOT)
+        {
+            _tripleShotActivated = true;
+            StartCoroutine(TripleShotPowerDownRoutine());
+        }
+
+        else if (powerupType == PowerupType.SPEED)
+        {
+            _speedPowerupActivated = true;
+            StartCoroutine(SpeedPowerDownRoutine());
+        }
     }
 
     IEnumerator TripleShotPowerDownRoutine()
     {
         yield return new WaitForSeconds(5);
         _tripleShotActivated = false;
+    }
+
+    IEnumerator SpeedPowerDownRoutine()
+    {
+        yield return new WaitForSeconds(3);
+        _speedPowerupActivated = false;
+        
     }
 }

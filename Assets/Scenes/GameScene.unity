@@ -218,6 +218,7 @@ MonoBehaviour:
     type: 3}
   tripleShotPrefab: {fileID: 1653688420710009208, guid: c18f4f871d41a2e44a44698d1acb0b67,
     type: 3}
+  speedPowerupMultiplier: 4
   _cooldownTime: 0.2
 --- !u!212 &1088850306
 SpriteRenderer:
@@ -513,6 +514,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enemy: {fileID: 4955709519596888532, guid: 35c3555eb4de3634a8df4209af30f6da, type: 3}
   _tripleShotPowerup: {fileID: 6502042710024680872, guid: 87f67ef1a8d0d0547bc53f06a64d8c3e,
+    type: 3}
+  _speedPowerup: {fileID: 104137661906991502, guid: d3c559696ae421c47bf011a8a30207e1,
     type: 3}
   _enemyHolder: {fileID: 1031844993}
   _powerupHolder: {fileID: 669049694}

@@ -2,10 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum PowerupType
+{
+    SPEED,
+    TRIPLESHOT
+}
+
 public class Powerup : MonoBehaviour
 {
     [SerializeField]
     private float _speed = 3;
+    [SerializeField]
+    private PowerupType _powerupType;
 
     // Update is called once per frame
     void Update()
@@ -23,7 +31,7 @@ public class Powerup : MonoBehaviour
         if (collision.tag == "Player")
         {
             Player player = collision.transform.GetComponent<Player>();
-            player.PowerupCollected();
+            player.PowerupCollected(_powerupType);
 
             Destroy(this.gameObject);
         }
