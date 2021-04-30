@@ -7,9 +7,7 @@ public class SpawnManager : MonoBehaviour
     [SerializeField]
     private GameObject _enemy;
     [SerializeField]
-    private GameObject _tripleShotPowerup;
-    [SerializeField]
-    private GameObject _speedPowerup;
+    private GameObject[] powerups;
 
     [SerializeField]
     private Transform _enemyHolder;
@@ -40,23 +38,9 @@ public class SpawnManager : MonoBehaviour
             float waitTime = Random.Range(3, 7);
             Vector3 spawnPos = new Vector3(Random.Range(_leftBound, _rightBound), _topBound);
             GameObject powerupToSpawn;
-            int powerupType = Random.Range(0, 2);
+            int powerupType = Random.Range(0, 3);
 
-            switch (powerupType)
-            {
-                case (0):
-                    powerupToSpawn = _speedPowerup;
-                    break;
-
-                case (1):
-                    powerupToSpawn = _tripleShotPowerup;
-                    break;
-
-                default:
-                    powerupToSpawn = _tripleShotPowerup;
-                    break;
-
-            }
+            powerupToSpawn = powerups[powerupType];
 
             Instantiate(powerupToSpawn, spawnPos, Quaternion.identity, _powerupHolder);
             yield return new WaitForSeconds(waitTime);

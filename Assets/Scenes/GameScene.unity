@@ -212,11 +212,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f37a3fcbf8e507a40a794e20ab9e6484, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 2
-  boostMultiplier: 5
+  speed: 3
+  boostMultiplier: 2
   projectile: {fileID: 5720055169872864122, guid: 3aa1a23b28b253a4cb58290a2de79986,
     type: 3}
   tripleShotPrefab: {fileID: 1653688420710009208, guid: c18f4f871d41a2e44a44698d1acb0b67,
+    type: 3}
+  shieldPrefab: {fileID: 5751568570251278703, guid: 3c8a4d074aae96f4fbb25830ad5ba951,
     type: 3}
   speedPowerupMultiplier: 4
   _cooldownTime: 0.2
@@ -278,7 +280,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1088850304}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -2.44, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 0}
@@ -513,10 +515,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemy: {fileID: 4955709519596888532, guid: 35c3555eb4de3634a8df4209af30f6da, type: 3}
-  _tripleShotPowerup: {fileID: 6502042710024680872, guid: 87f67ef1a8d0d0547bc53f06a64d8c3e,
-    type: 3}
-  _speedPowerup: {fileID: 104137661906991502, guid: d3c559696ae421c47bf011a8a30207e1,
-    type: 3}
+  powerups:
+  - {fileID: 6502042710024680872, guid: 87f67ef1a8d0d0547bc53f06a64d8c3e, type: 3}
+  - {fileID: 104137661906991502, guid: d3c559696ae421c47bf011a8a30207e1, type: 3}
+  - {fileID: 6616924753300378772, guid: 5325a0d1effdbec4885b6693a4ef87f9, type: 3}
   _enemyHolder: {fileID: 1031844993}
   _powerupHolder: {fileID: 669049694}
   _spawnRate: 1

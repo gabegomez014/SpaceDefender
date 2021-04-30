@@ -5,7 +5,8 @@ using UnityEngine;
 public enum PowerupType
 {
     SPEED,
-    TRIPLESHOT
+    TRIPLESHOT,
+    SHIELD
 }
 
 public class Powerup : MonoBehaviour

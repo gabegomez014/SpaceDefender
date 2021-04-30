@@ -18,6 +18,7 @@ public class Player : MonoBehaviour
 
     public GameObject projectile;
     public GameObject tripleShotPrefab;
+    public GameObject shieldPrefab;
 
     [SerializeField]
     private float speedPowerupMultiplier = 5;
@@ -39,8 +40,11 @@ public class Player : MonoBehaviour
     private bool _boostActivated = false;
     private bool _tripleShotActivated = false;
     private bool _speedPowerupActivated = false;
+    private bool _shieldActivated = false;
 
     private SpawnManager _spawnManager;
+
+    private GameObject _currentActivatedShield;
 
     void Start()
     {
@@ -132,6 +136,13 @@ public class Player : MonoBehaviour
 
     public void HitByEnemy()
     {
+        if (_shieldActivated)
+        {
+            _shieldActivated = false;
+            Destroy(_currentActivatedShield);
+            return;
+        }
+
         _lives -= 1;
 
         if (_lives <= 0)
@@ -154,6 +165,13 @@ public class Player : MonoBehaviour
             _speedPowerupActivated = true;
             StartCoroutine(SpeedPowerDownRoutine());
         }
+
+        else if (powerupType == PowerupType.SHIELD)
+        {
+            _currentActivatedShield = Instantiate(shieldPrefab, transform.position, Quaternion.identity, transform);
+            _shieldActivated = true;
+            StartCoroutine(ShieldPowerDownRoutine());
+        }
     }
 
     IEnumerator TripleShotPowerDownRoutine()
@@ -167,5 +185,16 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(3);
         _speedPowerupActivated = false;
         
+    }
+
+    IEnumerator ShieldPowerDownRoutine()
+    {
+        yield return new WaitForSeconds(4);
+        if (_currentActivatedShield != null)
+        {
+            _shieldActivated = false;
+            Destroy(_currentActivatedShield);
+        }
+
     }
 }
