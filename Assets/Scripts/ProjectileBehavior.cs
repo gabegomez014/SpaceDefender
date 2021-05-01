@@ -6,6 +6,18 @@ public class ProjectileBehavior : MonoBehaviour
 {
     public float speed = 10;
 
+    private UIManager _uiManager;
+
+    private void Start()
+    {
+        _uiManager = GameObject.Find("UIManager").GetComponent<UIManager>();
+
+        if (_uiManager == null)
+        {
+            Debug.LogWarning("Could not find the UI Manager script");
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -14,6 +26,7 @@ public class ProjectileBehavior : MonoBehaviour
 
     public void EnemyHit()
     {
+        _uiManager.UpdateScore();
         Destroy(this.gameObject);
     }
 

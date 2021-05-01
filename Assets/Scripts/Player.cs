@@ -44,10 +44,13 @@ public class Player : MonoBehaviour
 
     private SpawnManager _spawnManager;
 
+    private UIManager _uiManager;
+
     private GameObject _currentActivatedShield;
 
     void Start()
     {
+        _uiManager = GameObject.Find("UIManager").GetComponent<UIManager>();
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
     }
 
@@ -144,6 +147,7 @@ public class Player : MonoBehaviour
         }
 
         _lives -= 1;
+        _uiManager.DecreaseLife(_lives);
 
         if (_lives <= 0)
         {

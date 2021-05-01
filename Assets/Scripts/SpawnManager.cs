@@ -70,4 +70,11 @@ public class SpawnManager : MonoBehaviour
             Destroy(child.gameObject);
         }
     }
+
+    public void GameRestarted()
+    {
+        _keepSpawning = true;
+        StartCoroutine(SpawnEnemies());
+        StartCoroutine(SpawnPowerups());
+    }
 }
