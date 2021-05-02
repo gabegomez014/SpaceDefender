@@ -33,7 +33,6 @@ public class Powerup : MonoBehaviour
         {
             Player player = collision.transform.GetComponent<Player>();
             player.PowerupCollected(_powerupType);
-
             Destroy(this.gameObject);
         }
     }

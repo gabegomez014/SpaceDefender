@@ -6,6 +6,8 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField]
     private float _speed = 5;
+    [SerializeField]
+    private AudioClip _explosionSFX;
 
     private float _bottomBound = -5.5f;
     private float _topBound = 7;
@@ -13,14 +15,21 @@ public class Enemy : MonoBehaviour
     private float _rightBound = 9.3f;
 
     private Animator _animator;
+    private AudioSource _audioSource;
 
     private void Start()
     {
         _animator = GetComponent<Animator>();
+        _audioSource = GetComponent<AudioSource>();
 
         if (_animator == null)
         {
             Debug.LogWarning("Could not find animator component");
+        }
+
+        if (_audioSource == null)
+        {
+            Debug.LogWarning("Could not find Audio Source component");
         }
     }
 
@@ -49,6 +58,7 @@ public class Enemy : MonoBehaviour
             laser.EnemyHit();
             _animator.SetBool("isDestroyed", true);
             _speed = 0;
+            _audioSource.PlayOneShot(_explosionSFX);
             Destroy(this.gameObject, 2.8f);
         }
 
@@ -58,6 +68,7 @@ public class Enemy : MonoBehaviour
             player.HitByEnemy();
             _animator.SetBool("isDestroyed", true);
             _speed = 0;
+            _audioSource.PlayOneShot(_explosionSFX);
             Destroy(this.gameObject, 2.8f);
         }
 

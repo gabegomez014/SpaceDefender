@@ -8,13 +8,17 @@ public class AsteroidController : MonoBehaviour
     private float _speed;
     [SerializeField]
     private GameObject _explosion;
+    [SerializeField]
+    private AudioClip _explosionSFX;
 
     private SpawnManager _spawnManager;
+    private AudioSource _audioSource;
 
     // Start is called before the first frame update
     void Start()
     {
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
+        _audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -29,6 +33,7 @@ public class AsteroidController : MonoBehaviour
         {
             Destroy(other.gameObject);
             GameObject explosion = Instantiate(_explosion, transform.position, Quaternion.identity);
+            _audioSource.PlayOneShot(_explosionSFX);
             Destroy(explosion, 2.5f);
             Destroy(this.gameObject, 0.25f);
             _spawnManager.StartSpawning();

@@ -20,6 +20,11 @@ public class Player : MonoBehaviour
     public GameObject tripleShotPrefab;
     public GameObject shieldPrefab;
 
+    public AudioClip laserShotSFX;
+
+    [SerializeField]
+    private AudioClip _powerupSFX;
+
     [SerializeField]
     private float speedPowerupMultiplier = 5;
 
@@ -46,6 +51,8 @@ public class Player : MonoBehaviour
 
     private UIManager _uiManager;
 
+    private AudioSource _audioSource;
+
     private GameObject _currentActivatedShield;
     [SerializeField]
     private GameObject _rightEngineFire;
@@ -56,6 +63,7 @@ public class Player : MonoBehaviour
     {
         _uiManager = GameObject.Find("UIManager").GetComponent<UIManager>();
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
+        _audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -100,6 +108,7 @@ public class Player : MonoBehaviour
                 Instantiate(projectile, spawnLocation, Quaternion.identity);
             }
 
+            _audioSource.PlayOneShot(laserShotSFX);
             _currentCoolDownTimer += _cooldownTime;
         }
     }
@@ -190,6 +199,8 @@ public class Player : MonoBehaviour
             _shieldActivated = true;
             StartCoroutine(ShieldPowerDownRoutine());
         }
+
+        _audioSource.PlayOneShot(_powerupSFX);
     }
 
     IEnumerator TripleShotPowerDownRoutine()
