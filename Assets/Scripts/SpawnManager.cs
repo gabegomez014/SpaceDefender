@@ -23,16 +23,10 @@ public class SpawnManager : MonoBehaviour
 
     private bool _keepSpawning = true;
 
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        StartCoroutine(SpawnEnemies());
-        StartCoroutine(SpawnPowerups());
-    }
-
     IEnumerator SpawnPowerups()
     {
+        yield return new WaitForSeconds(0.5f);
+
         while (_keepSpawning)
         {
             float waitTime = Random.Range(3, 7);
@@ -49,12 +43,20 @@ public class SpawnManager : MonoBehaviour
 
     IEnumerator SpawnEnemies() 
     {
-        while(_keepSpawning)
+        yield return new WaitForSeconds(0.25f);
+
+        while (_keepSpawning)
         {
             Vector3 spawnPos = new Vector3(Random.Range(_leftBound, _rightBound), _topBound);
             Instantiate(_enemy, spawnPos, Quaternion.identity, _enemyHolder);
             yield return new WaitForSeconds(_spawnRate);
         }
+    }
+
+    public void StartSpawning()
+    {
+        StartCoroutine(SpawnPowerups());
+        StartCoroutine(SpawnEnemies());
     }
 
     public void StopSpawning()

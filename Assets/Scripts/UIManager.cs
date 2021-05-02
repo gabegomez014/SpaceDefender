@@ -16,7 +16,7 @@ public class UIManager : MonoBehaviour
     private TextMeshProUGUI _restartText;
 
     [SerializeField]
-    private GameObject playerPrefab;
+    private GameObject _playerPrefab;   
 
     [SerializeField]
     private Sprite[] _livesSprites;
@@ -53,7 +53,7 @@ public class UIManager : MonoBehaviour
         _isGameOver = false;
         _gameOverText.gameObject.SetActive(false);
         _restartText.gameObject.SetActive(false);
-        Instantiate(playerPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+        Instantiate(_playerPrefab, new Vector3(0, 0, 0), Quaternion.identity);
         _livesDisplay.sprite = _livesSprites[3];
         _currentScore = 0;
         _scoreText.text = "Score: " + _currentScore;

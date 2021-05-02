@@ -47,6 +47,10 @@ public class Player : MonoBehaviour
     private UIManager _uiManager;
 
     private GameObject _currentActivatedShield;
+    [SerializeField]
+    private GameObject _rightEngineFire;
+    [SerializeField]
+    private GameObject _leftEngineFire;
 
     void Start()
     {
@@ -148,6 +152,16 @@ public class Player : MonoBehaviour
 
         _lives -= 1;
         _uiManager.DecreaseLife(_lives);
+
+        if (_lives == 2)
+        {
+            _leftEngineFire.SetActive(true);
+        }
+
+        if (_lives == 1)
+        {
+            _rightEngineFire.SetActive(true);
+        }
 
         if (_lives <= 0)
         {

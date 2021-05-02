@@ -12,6 +12,18 @@ public class Enemy : MonoBehaviour
     private float _leftBound = -9.3f;
     private float _rightBound = 9.3f;
 
+    private Animator _animator;
+
+    private void Start()
+    {
+        _animator = GetComponent<Animator>();
+
+        if (_animator == null)
+        {
+            Debug.LogWarning("Could not find animator component");
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -35,14 +47,19 @@ public class Enemy : MonoBehaviour
         {
             ProjectileBehavior laser = other.GetComponent<ProjectileBehavior>();
             laser.EnemyHit();
-            Destroy(this.gameObject);
+            _animator.SetBool("isDestroyed", true);
+            _speed = 0;
+            Destroy(this.gameObject, 2.8f);
         }
 
         else if (other.tag == "Player")
         {
             Player player = other.GetComponent<Player>();
             player.HitByEnemy();
-            Destroy(this.gameObject);
+            _animator.SetBool("isDestroyed", true);
+            _speed = 0;
+            Destroy(this.gameObject, 2.8f);
         }
+
     }
 }
