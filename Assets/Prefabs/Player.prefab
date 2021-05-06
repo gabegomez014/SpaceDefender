@@ -518,7 +518,10 @@ MonoBehaviour:
   _powerupSFX: {fileID: 8300000, guid: 5ee343246919d2b4bba63ae629e95494, type: 3}
   speedPowerupMultiplier: 2
   _cooldownTime: 0.2
+  _boostChargeMeter: {fileID: 0}
   _camManager: {fileID: 0}
+  _maxBoostCharge: 3
+  _boostRechargeRate: 1.5
   _rightEngineFire: {fileID: 1373406526234018969}
   _leftEngineFire: {fileID: 2823482569931038538}
   _normalThrusters: {fileID: 4346057121788882581}

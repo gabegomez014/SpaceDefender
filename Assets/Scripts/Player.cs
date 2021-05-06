@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 enum Directions
 {
@@ -33,15 +34,23 @@ public class Player : MonoBehaviour
     private float _currentCoolDownTimer = 0;
 
     [SerializeField]
+    private Image _boostChargeMeter;
+
+    [SerializeField]
     private CamManager _camManager;
 
     private int _lives = 3;
     private int _shieldsAmount = 0;
+    [SerializeField]
+    private int _maxBoostCharge = 5;
 
+    [SerializeField]
+    private float _boostRechargeRate;
     private float _topBounds = 0;
     private float _bottomBounds = -4;
     private float _rightBounds = 9.3f;
     private float _leftBounds = -9.3f;
+    private float _currentBoostCharge;
 
     private Directions _horizontalFlag;
     private Directions _verticalFlag;
@@ -72,6 +81,8 @@ public class Player : MonoBehaviour
         _uiManager = GameObject.Find("UIManager").GetComponent<UIManager>();
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         _audioSource = GetComponent<AudioSource>();
+
+        _currentBoostCharge = _maxBoostCharge;
     }
 
     // Update is called once per frame
@@ -85,6 +96,36 @@ public class Player : MonoBehaviour
 
         else { ActivateNormalThrusters(); }
 
+        if (_boostActivated)
+        {
+            if (_currentBoostCharge > 0)
+            {
+                _currentBoostCharge -= Time.deltaTime;
+            }
+
+            else
+            {
+                ActivateNormalThrusters();
+            }
+
+            UpdateBoostMeter();
+        }
+
+        else
+        { 
+            if (_currentBoostCharge < _maxBoostCharge)
+            {
+                _currentBoostCharge += Time.deltaTime * _boostRechargeRate;
+            }
+
+            else
+            {
+                _currentBoostCharge = _maxBoostCharge;
+            }
+
+            UpdateBoostMeter();
+        }
+
         // Checking all cooldown related aspects for shooting projectiles
         if (_currentCoolDownTimer > 0)
         {
@@ -95,6 +136,11 @@ public class Player : MonoBehaviour
 
         // Calculate Player movements given User Input
         CalculatePlayerMovement();
+    }
+
+    void UpdateBoostMeter()
+    {
+        _boostChargeMeter.fillAmount = _currentBoostCharge / _maxBoostCharge;
     }
 
     void ActivateBoost()
