@@ -59,6 +59,7 @@ public class Enemy : MonoBehaviour
             _animator.SetBool("isDestroyed", true);
             _speed = 0;
             _audioSource.PlayOneShot(_explosionSFX);
+            Destroy(GetComponent<Collider2D>());
             Destroy(this.gameObject, 2.8f);
         }
 

@@ -18,7 +18,7 @@ public class Player : MonoBehaviour
 
     public GameObject projectile;
     public GameObject tripleShotPrefab;
-    public GameObject shieldPrefab;
+    public GameObject[] shieldPrefabs;
 
     public AudioClip laserShotSFX;
 
@@ -32,7 +32,11 @@ public class Player : MonoBehaviour
     private float _cooldownTime = 0.1f;
     private float _currentCoolDownTimer = 0;
 
+    [SerializeField]
+    private CamManager _camManager;
+
     private int _lives = 3;
+    private int _shieldsAmount = 0;
 
     private float _topBounds = 0;
     private float _bottomBounds = -4;
@@ -58,6 +62,10 @@ public class Player : MonoBehaviour
     private GameObject _rightEngineFire;
     [SerializeField]
     private GameObject _leftEngineFire;
+    [SerializeField]
+    private GameObject _normalThrusters;
+    [SerializeField]
+    private GameObject _boostThrusters;
 
     void Start()
     {
@@ -70,12 +78,12 @@ public class Player : MonoBehaviour
     void Update()
     {
         // Code to switch boostActivated boolean
-        if ( Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift) )
+        if ( Input.GetKey(KeyCode.LeftShift) )
         {
-            _boostActivated = true;
+            ActivateBoost();
         }
 
-        else { _boostActivated = false; }
+        else { ActivateNormalThrusters(); }
 
         // Checking all cooldown related aspects for shooting projectiles
         if (_currentCoolDownTimer > 0)
@@ -87,6 +95,20 @@ public class Player : MonoBehaviour
 
         // Calculate Player movements given User Input
         CalculatePlayerMovement();
+    }
+
+    void ActivateBoost()
+    {
+        _boostActivated = true;
+        _normalThrusters.SetActive(false);
+        _boostThrusters.SetActive(true);
+    }
+
+    void ActivateNormalThrusters()
+    {
+        _boostActivated = false;
+        _normalThrusters.SetActive(true);
+        _boostThrusters.SetActive(false);
     }
 
     void Shoot()
@@ -154,13 +176,27 @@ public class Player : MonoBehaviour
     {
         if (_shieldActivated)
         {
-            _shieldActivated = false;
+            _shieldsAmount -= 1;
+
+            if (_shieldsAmount <= 0)
+            {
+                _shieldsAmount = 0;
+                _shieldActivated = false;
+            }
+
             Destroy(_currentActivatedShield);
+
+            if (_shieldsAmount > 0)
+            {
+                _currentActivatedShield = Instantiate(shieldPrefabs[_shieldsAmount - 1], transform.position, Quaternion.identity, transform);
+            }
+
             return;
         }
 
         _lives -= 1;
         _uiManager.DecreaseLife(_lives);
+        _camManager.PlayerHit();
 
         if (_lives == 2)
         {
@@ -195,9 +231,13 @@ public class Player : MonoBehaviour
 
         else if (powerupType == PowerupType.SHIELD)
         {
-            _currentActivatedShield = Instantiate(shieldPrefab, transform.position, Quaternion.identity, transform);
+            if (_shieldActivated)
+            {
+                return;
+            }
+            _currentActivatedShield = Instantiate(shieldPrefabs[2], transform.position, Quaternion.identity, transform);
             _shieldActivated = true;
-            StartCoroutine(ShieldPowerDownRoutine());
+            _shieldsAmount += 3;
         }
 
         _audioSource.PlayOneShot(_powerupSFX);
@@ -214,16 +254,5 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(3);
         _speedPowerupActivated = false;
         
-    }
-
-    IEnumerator ShieldPowerDownRoutine()
-    {
-        yield return new WaitForSeconds(4);
-        if (_currentActivatedShield != null)
-        {
-            _shieldActivated = false;
-            Destroy(_currentActivatedShield);
-        }
-
     }
 }

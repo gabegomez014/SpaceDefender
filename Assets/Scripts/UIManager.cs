@@ -14,6 +14,8 @@ public class UIManager : MonoBehaviour
     private TextMeshProUGUI _gameOverText;
     [SerializeField]
     private TextMeshProUGUI _restartText;
+    [SerializeField]
+    private GameObject _pauseScreen;
 
     [SerializeField]
     private GameObject _playerPrefab;   
@@ -46,6 +48,12 @@ public class UIManager : MonoBehaviour
         {
             RestartGame();
         }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Time.timeScale = 0;
+            _pauseScreen.SetActive(true);
+        }
     }
 
     void RestartGame()
@@ -77,6 +85,17 @@ public class UIManager : MonoBehaviour
             _isGameOver = true;
             StartCoroutine(GameOverFlicker());
         }
+    }
+
+    public void ContinueGame()
+    {
+        _pauseScreen.SetActive(false);
+        Time.timeScale = 1;
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 
     IEnumerator GameOverFlicker()

@@ -35,7 +35,8 @@ public class AsteroidController : MonoBehaviour
             GameObject explosion = Instantiate(_explosion, transform.position, Quaternion.identity);
             _audioSource.PlayOneShot(_explosionSFX);
             Destroy(explosion, 2.5f);
-            Destroy(this.gameObject, 0.25f);
+            Destroy(this.gameObject, 0.5f);
+            Destroy(GetComponent<Collider2D>());
             _spawnManager.StartSpawning();
 
         }
