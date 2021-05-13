@@ -32,7 +32,7 @@ public class ProjectileBehavior : MonoBehaviour
 
     void CalculateMovement()
     {
-        transform.Translate(Vector3.up * Time.deltaTime * speed);
+        transform.Translate(transform.up * Time.deltaTime * speed);
 
         if (transform.position.y >= 7.2f)
         {
