@@ -82,6 +82,17 @@ public class Player : MonoBehaviour
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         _audioSource = GetComponent<AudioSource>();
 
+        if (_boostChargeMeter == null)
+        {
+            _boostChargeMeter = _uiManager.transform.Find("BoostUI").GetComponent<Image>();
+        }
+
+        if (_camManager == null)
+        {
+            Debug.Log("Getting in here");
+            _camManager = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CamManager>();
+        }
+
         _currentBoostCharge = _maxBoostCharge;
     }
 
