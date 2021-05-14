@@ -89,7 +89,6 @@ public class Player : MonoBehaviour
 
         if (_camManager == null)
         {
-            Debug.Log("Getting in here");
             _camManager = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CamManager>();
         }
 
