@@ -99,7 +99,7 @@ public class Player : MonoBehaviour
     void Update()
     {
         // Code to switch boostActivated boolean
-        if ( Input.GetKey(KeyCode.LeftShift) )
+        if (Input.GetKey(KeyCode.LeftShift))
         {
             ActivateBoost();
         }
@@ -122,7 +122,7 @@ public class Player : MonoBehaviour
         }
 
         else
-        { 
+        {
             if (_currentBoostCharge < _maxBoostCharge)
             {
                 _currentBoostCharge += Time.deltaTime * _boostRechargeRate;
@@ -172,7 +172,7 @@ public class Player : MonoBehaviour
         if (_currentCoolDownTimer <= 0)
         {
             Vector3 spawnLocation = transform.position;
-            spawnLocation.y += 1.05f;
+            spawnLocation.y += 1.85f;
 
             if (_tripleShotActivated)
             {
@@ -201,7 +201,7 @@ public class Player : MonoBehaviour
         if (_boostActivated)
         {
             direction = direction * boostMultiplier;
-        } 
+        }
 
         if (_speedPowerupActivated)
         {
@@ -221,7 +221,7 @@ public class Player : MonoBehaviour
 
         else { _verticalFlag = Directions.CLEAR; }
 
-        if (transform.position.x >= _rightBounds) {   _horizontalFlag = Directions.RIGHT; }
+        if (transform.position.x >= _rightBounds) { _horizontalFlag = Directions.RIGHT; }
 
         else if (transform.position.x <= _leftBounds) { _horizontalFlag = Directions.LEFT; }
 
@@ -296,7 +296,26 @@ public class Player : MonoBehaviour
             _shieldsAmount += 3;
         }
 
-        _audioSource.PlayOneShot(_powerupSFX);
+        else if (powerupType == PowerupType.HEALTH)
+        {
+            if (_lives < 3)
+            {
+                _lives += 1;
+                _uiManager.IncreaseLife(_lives);
+            }
+
+            if (_lives == 3)
+            {
+                _leftEngineFire.SetActive(false);
+            }
+
+            if (_lives == 2)
+            {
+                _rightEngineFire.SetActive(false);
+            }
+
+            _audioSource.PlayOneShot(_powerupSFX);
+        }
     }
 
     IEnumerator TripleShotPowerDownRoutine()
@@ -309,6 +328,6 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(3);
         _speedPowerupActivated = false;
-        
+
     }
 }

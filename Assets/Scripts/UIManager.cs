@@ -87,6 +87,12 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    public void IncreaseLife(int lives)
+    {
+        // We can assume this will only called when the health power up is picked up (for now)
+        _livesDisplay.sprite = _livesSprites[lives];
+    }
+
     public void ContinueGame()
     {
         _pauseScreen.SetActive(false);
