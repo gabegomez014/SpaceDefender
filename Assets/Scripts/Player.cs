@@ -22,6 +22,7 @@ public class Player : MonoBehaviour
     public GameObject[] shieldPrefabs;
 
     public AudioClip laserShotSFX;
+    public AudioClip outOfAmmoSFX;
 
     [SerializeField]
     private AudioClip _powerupSFX;
@@ -65,6 +66,8 @@ public class Player : MonoBehaviour
     private UIManager _uiManager;
 
     private AudioSource _audioSource;
+
+    private int _ammoCount = 15;
 
     private GameObject _currentActivatedShield;
     [SerializeField]
@@ -171,6 +174,7 @@ public class Player : MonoBehaviour
     {
         if (_currentCoolDownTimer <= 0)
         {
+
             Vector3 spawnLocation = transform.position;
             spawnLocation.y += 1.85f;
 
@@ -179,14 +183,21 @@ public class Player : MonoBehaviour
                 // Instantiate triple shot
                 spawnLocation.x = spawnLocation.x - 0.5f;
                 Instantiate(tripleShotPrefab, spawnLocation, Quaternion.identity);
+                _audioSource.PlayOneShot(laserShotSFX);
+            }
+
+            else if (_ammoCount > 0)
+            {
+                _ammoCount -= 1;
+                _uiManager.DecreaseAmmo(_ammoCount);
+                Instantiate(projectile, spawnLocation, Quaternion.identity);
+                _audioSource.PlayOneShot(laserShotSFX);
             }
 
             else
             {
-                Instantiate(projectile, spawnLocation, Quaternion.identity);
+                _audioSource.PlayOneShot(outOfAmmoSFX, 1);
             }
-
-            _audioSource.PlayOneShot(laserShotSFX);
             _currentCoolDownTimer += _cooldownTime;
         }
     }
@@ -313,9 +324,15 @@ public class Player : MonoBehaviour
             {
                 _rightEngineFire.SetActive(false);
             }
-
-            _audioSource.PlayOneShot(_powerupSFX);
         }
+
+        else if (powerupType == PowerupType.AMMO)
+        {
+            _ammoCount = 15;
+            _uiManager.AmmoRefilled();
+        }
+
+        _audioSource.PlayOneShot(_powerupSFX);
     }
 
     IEnumerator TripleShotPowerDownRoutine()

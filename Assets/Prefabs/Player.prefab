@@ -637,6 +637,7 @@ MonoBehaviour:
   - {fileID: 966441649615783417, guid: ae2e48314a5d5ab4c8c543183f2e2539, type: 3}
   - {fileID: 2142003047434281285, guid: 0c4fb2162eb2a16479b558bbd41b7f02, type: 3}
   laserShotSFX: {fileID: 8300000, guid: 75676f361bdfeaf41a46623e95df3dbc, type: 3}
+  outOfAmmoSFX: {fileID: 8300000, guid: 07d01d06177e7cc44a77ffb0a65d39a7, type: 3}
   _powerupSFX: {fileID: 8300000, guid: 5ee343246919d2b4bba63ae629e95494, type: 3}
   speedPowerupMultiplier: 5
   _cooldownTime: 0.2

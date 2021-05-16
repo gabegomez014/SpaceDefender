@@ -50,6 +50,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speed: 5
   _explosionSFX: {fileID: 8300000, guid: a885c043fab7e46438bba03ba9dab6bc, type: 3}
+  _ammoCollectible: {fileID: 1005757643501228822, guid: af2ee7438b2927c4e966660d5ec4ebc1,
+    type: 3}
 --- !u!212 &-5401565127361525104
 SpriteRenderer:
   m_ObjectHideFlags: 0
