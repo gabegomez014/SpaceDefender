@@ -3,17 +3,20 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
     [SerializeField]
-    private TextMeshProUGUI _scoreText;
+    private Text _scoreText;
     [SerializeField]
     private Image _livesDisplay;
     [SerializeField]
-    private TextMeshProUGUI _gameOverText;
+    private Text _gameOverText;
     [SerializeField]
-    private TextMeshProUGUI _restartText;
+    private Text _restartText;
+    [SerializeField]
+    private Text _ammoText;
     [SerializeField]
     private GameObject _pauseScreen;
 
@@ -58,20 +61,18 @@ public class UIManager : MonoBehaviour
 
     void RestartGame()
     {
-        _isGameOver = false;
-        _gameOverText.gameObject.SetActive(false);
-        _restartText.gameObject.SetActive(false);
-        Instantiate(_playerPrefab, new Vector3(0, 0, 0), Quaternion.identity);
-        _livesDisplay.sprite = _livesSprites[3];
-        _currentScore = 0;
-        _scoreText.text = "Score: " + _currentScore;
-        _spawnManager.GameRestarted();
+        SceneManager.LoadScene(1);
     }
 
     public void UpdateScore()
     {
         _currentScore += 10;
         _scoreText.text = "Score: " + _currentScore;
+    }
+    
+    public void DecreaseAmmo(int ammoCount)
+    {
+        _ammoText.text = "Ammo:" + ammoCount + "/15";
     }
 
     public void DecreaseLife(int lives)
@@ -85,6 +86,11 @@ public class UIManager : MonoBehaviour
             _isGameOver = true;
             StartCoroutine(GameOverFlicker());
         }
+    }
+
+    public void AmmoRefilled()
+    {
+        _ammoText.text = "Ammo:15/15";
     }
 
     public void IncreaseLife(int lives)

@@ -8,6 +8,8 @@ public class Enemy : MonoBehaviour
     private float _speed = 5;
     [SerializeField]
     private AudioClip _explosionSFX;
+    [SerializeField]
+    private GameObject _ammoCollectible;
 
     private float _bottomBound = -5.5f;
     private float _topBound = 7;
@@ -58,6 +60,12 @@ public class Enemy : MonoBehaviour
             laser.EnemyHit();
             _animator.SetBool("isDestroyed", true);
             _speed = 0;
+
+            if (Random.value <= 0.2)
+            {
+                Instantiate(_ammoCollectible, transform.position, Quaternion.identity);
+            }
+
             _audioSource.PlayOneShot(_explosionSFX);
             Destroy(GetComponent<Collider2D>());
             Destroy(this.gameObject, 2.8f);
