@@ -71,6 +71,23 @@ public class Enemy : MonoBehaviour
             Destroy(this.gameObject, 2.8f);
         }
 
+        else if (other.tag == "HeatedShot")
+        {
+            HeatedShotControl shot = other.GetComponent<HeatedShotControl>();
+            shot.Explode();
+            _animator.SetBool("isDestroyed", true);
+            _speed = 0;
+
+            if (Random.value <= 0.2)
+            {
+                Instantiate(_ammoCollectible, transform.position, Quaternion.identity);
+            }
+
+            _audioSource.PlayOneShot(_explosionSFX);
+            Destroy(GetComponent<Collider2D>());
+            Destroy(this.gameObject, 2.8f);
+        }
+
         else if (other.tag == "Player")
         {
             Player player = other.GetComponent<Player>();

@@ -8,6 +8,8 @@ public class SpawnManager : MonoBehaviour
     private GameObject _enemy;
     [SerializeField]
     private GameObject[] _powerups;
+    [SerializeField]
+    private GameObject[] _rarePowerups;
 
     [SerializeField]
     private Transform _enemyHolder;
@@ -31,11 +33,26 @@ public class SpawnManager : MonoBehaviour
         {
             float waitTime = Random.Range(3, 7);
             Vector3 spawnPos = new Vector3(Random.Range(_leftBound, _rightBound), _topBound);
-            GameObject powerupToSpawn;
-            int powerupType = Random.Range(0, _powerups.Length);
-            powerupToSpawn = _powerups[powerupType];
 
-            Instantiate(powerupToSpawn, spawnPos, Quaternion.identity, _powerupHolder);
+            //Checking to see if we should drop a rare power-up (Currently set to a 5% probability)
+            if (Random.value <= 0.05f)
+            {
+                GameObject rarePowerupToSpawn;
+                int powerupType = Random.Range(0, _rarePowerups.Length);
+                rarePowerupToSpawn = _rarePowerups[powerupType];
+
+                Instantiate(rarePowerupToSpawn, spawnPos, Quaternion.identity, _powerupHolder);
+            }
+
+            else
+            {
+                GameObject powerupToSpawn;
+                int powerupType = Random.Range(0, _powerups.Length);
+                powerupToSpawn = _powerups[powerupType];
+
+                Instantiate(powerupToSpawn, spawnPos, Quaternion.identity, _powerupHolder);
+            }
+
             yield return new WaitForSeconds(waitTime);
         }
     }
