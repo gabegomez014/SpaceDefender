@@ -19,6 +19,7 @@ public class Player : MonoBehaviour
 
     public GameObject projectile;
     public GameObject tripleShotPrefab;
+    public GameObject heatedShotPrefab;
     public GameObject[] shieldPrefabs;
 
     public AudioClip laserShotSFX;
@@ -60,6 +61,7 @@ public class Player : MonoBehaviour
     private bool _tripleShotActivated = false;
     private bool _speedPowerupActivated = false;
     private bool _shieldActivated = false;
+    private bool _heatedShotActivated = false;
 
     private SpawnManager _spawnManager;
 
@@ -176,13 +178,19 @@ public class Player : MonoBehaviour
         {
 
             Vector3 spawnLocation = transform.position;
-            spawnLocation.y += 1.85f;
+            spawnLocation.y += 1.58f;
 
             if (_tripleShotActivated)
             {
                 // Instantiate triple shot
                 spawnLocation.x = spawnLocation.x - 0.5f;
                 Instantiate(tripleShotPrefab, spawnLocation, Quaternion.identity);
+                _audioSource.PlayOneShot(laserShotSFX);
+            }
+
+            else if (_heatedShotActivated)
+            {
+                Instantiate(heatedShotPrefab, spawnLocation, Quaternion.identity);
                 _audioSource.PlayOneShot(laserShotSFX);
             }
 
@@ -296,6 +304,12 @@ public class Player : MonoBehaviour
             StartCoroutine(SpeedPowerDownRoutine());
         }
 
+        else if (powerupType == PowerupType.HEATEDSHOT)
+        {
+            _heatedShotActivated = true;
+            StartCoroutine(HeatedShotPowerdownRoutine());
+        }
+
         else if (powerupType == PowerupType.SHIELD)
         {
             if (_shieldActivated)
@@ -337,14 +351,20 @@ public class Player : MonoBehaviour
 
     IEnumerator TripleShotPowerDownRoutine()
     {
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(3);
         _tripleShotActivated = false;
     }
 
     IEnumerator SpeedPowerDownRoutine()
     {
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(4);
         _speedPowerupActivated = false;
 
+    }
+
+    IEnumerator HeatedShotPowerdownRoutine()
+    {
+        yield return new WaitForSeconds(5);
+        _heatedShotActivated = false;
     }
 }

@@ -632,6 +632,8 @@ MonoBehaviour:
     type: 3}
   tripleShotPrefab: {fileID: 1653688420710009208, guid: c18f4f871d41a2e44a44698d1acb0b67,
     type: 3}
+  heatedShotPrefab: {fileID: 3053744295549741995, guid: de89f9a77629fde44be39aeda20a2108,
+    type: 3}
   shieldPrefabs:
   - {fileID: 4461858357952738883, guid: b713d8d53765b9d48a0fd4d1b9d2b4e1, type: 3}
   - {fileID: 966441649615783417, guid: ae2e48314a5d5ab4c8c543183f2e2539, type: 3}
