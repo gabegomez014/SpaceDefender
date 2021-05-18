@@ -33,6 +33,11 @@ public class HeatedShotControl : MonoBehaviour
     void Update()
     {
         transform.Translate(Vector3.up * Time.deltaTime * _speed);
+
+        if (transform.position.y >= 7.2f)
+        {
+            Destroy(this.gameObject);
+        }
     }
 
     public void Explode()
