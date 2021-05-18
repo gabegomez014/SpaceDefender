@@ -62,6 +62,7 @@ public class Player : MonoBehaviour
     private bool _speedPowerupActivated = false;
     private bool _shieldActivated = false;
     private bool _heatedShotActivated = false;
+    private bool _systemOverrideActivated = false;
 
     private SpawnManager _spawnManager;
 
@@ -104,12 +105,12 @@ public class Player : MonoBehaviour
     void Update()
     {
         // Code to switch boostActivated boolean
-        if (Input.GetKey(KeyCode.LeftShift))
+        if (Input.GetKey(KeyCode.LeftShift) && !_systemOverrideActivated)
         {
             ActivateBoost();
         }
 
-        else { ActivateNormalThrusters(); }
+        else if (!_systemOverrideActivated) { ActivateNormalThrusters(); }
 
         if (_boostActivated)
         {
@@ -212,6 +213,8 @@ public class Player : MonoBehaviour
 
     void CalculatePlayerMovement()
     {
+        if (_systemOverrideActivated) { return; }
+
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
         // Move the GameObject up or down based off User Input if we are not at the bounds already
@@ -346,6 +349,14 @@ public class Player : MonoBehaviour
             _uiManager.AmmoRefilled();
         }
 
+        else if (powerupType == PowerupType.SYSTEMOVERRIDE)
+        {
+            _systemOverrideActivated = true;
+            _normalThrusters.SetActive(false);
+            _boostThrusters.SetActive(false);
+            StartCoroutine(SystemOverridePowerdownRoutine());
+        }
+
         _audioSource.PlayOneShot(_powerupSFX);
     }
 
@@ -366,5 +377,12 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(5);
         _heatedShotActivated = false;
+    }
+
+    IEnumerator SystemOverridePowerdownRoutine()
+    {
+        yield return new WaitForSeconds(2);
+        _normalThrusters.SetActive(true);
+        _systemOverrideActivated = false;
     }
 }

@@ -9,7 +9,8 @@ public enum PowerupType
     SHIELD,
     HEALTH,
     AMMO,
-    HEATEDSHOT
+    HEATEDSHOT,
+    SYSTEMOVERRIDE
 }
 
 public class Powerup : MonoBehaviour
