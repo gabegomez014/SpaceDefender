@@ -15,9 +15,16 @@ public class Enemy : MonoBehaviour
     private float _topBound = 7;
     private float _leftBound = -9.3f;
     private float _rightBound = 9.3f;
+    private float _moveCoolDown = 0;
+    private float _timeMoving = 1f;
+
+    private bool _moving = false;
 
     private Animator _animator;
     private AudioSource _audioSource;
+
+    private Vector3 _currentMoveDir;
+
 
     private void Start()
     {
@@ -43,12 +50,53 @@ public class Enemy : MonoBehaviour
 
     void CalculateMovment()
     {
-        transform.Translate(Vector3.down * Time.deltaTime * _speed);
+        Vector3 translationDir = Vector3.down + _currentMoveDir;
+
+        // 25% chance enemy moves left
+        if (_moveCoolDown <= 0 && Random.value <= 0.25f)
+        {
+            _moveCoolDown += 1;
+            _moving = true;
+            _currentMoveDir += Vector3.left;
+        }
+
+        //25% chance enemy moves right
+        else if (_moveCoolDown <= 0 && Random.value >= 0.75f)
+        {
+            _moveCoolDown += 1;
+            _moving = true;
+            _currentMoveDir += Vector3.right;
+        }
+
+        if (_timeMoving > 0)
+        {
+            _timeMoving -= Time.deltaTime;
+        }
+
+        else if (_timeMoving <= 0)
+        {
+            _currentMoveDir = new Vector3(0,0,0);
+            _moving = false;
+            _timeMoving = Random.Range(0.5f, 1);
+        }
+
+        transform.Translate(translationDir * Time.deltaTime * _speed);
 
         if (transform.position.y <= _bottomBound)
         {
             Vector3 respawnPos = new Vector3(Random.Range(_leftBound, _rightBound), _topBound);
             transform.position = respawnPos;
+        }
+
+        if (!_moving && _moveCoolDown > 0)
+        {
+            _moveCoolDown -= Time.deltaTime;
+        }
+
+        if (transform.position.x <= _leftBound || transform.position.x >= _rightBound)
+        {
+            _moving = false;
+            _timeMoving = 0;
         }
     }
 

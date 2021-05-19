@@ -10,6 +10,8 @@ public class SpawnManager : MonoBehaviour
     private GameObject[] _powerups;
     [SerializeField]
     private GameObject[] _rarePowerups;
+    [SerializeField]
+    private GameObject[] _planets;
 
     [SerializeField]
     private Transform _enemyHolder;
@@ -69,10 +71,25 @@ public class SpawnManager : MonoBehaviour
         }
     }
 
+    IEnumerator SpawnPlanets()
+    {
+        while (_keepSpawning)
+        {
+            Vector3 spawnPos = new Vector3(Random.Range(_leftBound, _rightBound), _topBound + 6);
+            GameObject planetToSpawn;
+            int planet = Random.Range(0, _planets.Length);
+            planetToSpawn = _planets[planet];
+
+            Instantiate(planetToSpawn, spawnPos, Quaternion.identity);
+            yield return new WaitForSeconds(Random.Range(5, 15));
+        }
+    }
+
     public void StartSpawning()
     {
         StartCoroutine(SpawnPowerups());
         StartCoroutine(SpawnEnemies());
+        StartCoroutine(SpawnPlanets());
     }
 
     public void StopSpawning()
@@ -94,5 +111,6 @@ public class SpawnManager : MonoBehaviour
         _keepSpawning = true;
         StartCoroutine(SpawnEnemies());
         StartCoroutine(SpawnPowerups());
+        StartCoroutine(SpawnPlanets());
     }
 }
