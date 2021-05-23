@@ -5,7 +5,7 @@ using UnityEngine;
 public class SpawnManager : MonoBehaviour
 {
     [SerializeField]
-    private GameObject _enemy;
+    private GameObject[] _enemies;
     [SerializeField]
     private GameObject[] _powerups;
     [SerializeField]
@@ -66,7 +66,10 @@ public class SpawnManager : MonoBehaviour
         while (_keepSpawning)
         {
             Vector3 spawnPos = new Vector3(Random.Range(_leftBound, _rightBound), _topBound);
-            Instantiate(_enemy, spawnPos, Quaternion.identity, _enemyHolder);
+            GameObject enemyToSpawn;
+            int enemyType = Random.Range(0, _enemies.Length);
+            enemyToSpawn = _enemies[enemyType];
+            Instantiate(enemyToSpawn, spawnPos, Quaternion.identity, _enemyHolder);
             yield return new WaitForSeconds(_spawnRate);
         }
     }

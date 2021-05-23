@@ -5,36 +5,31 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     [SerializeField]
-    private float _speed = 5;
+    protected float _speed = 5;
     [SerializeField]
     private AudioClip _explosionSFX;
     [SerializeField]
+    public GameObject _explosionVFX;
+    [SerializeField]
     private GameObject _ammoCollectible;
 
-    private float _bottomBound = -5.5f;
-    private float _topBound = 7;
-    private float _leftBound = -9.3f;
-    private float _rightBound = 9.3f;
-    private float _moveCoolDown = 0;
-    private float _timeMoving = 1f;
+    protected float _bottomBound = -5.5f;
+    protected float _topBound = 7;
+    protected float _leftBound = -9.3f;
+    protected float _rightBound = 9.3f;
+    protected float _moveCoolDown = 0;
+    protected float _timeMoving = 1f;
 
-    private bool _moving = false;
+    protected bool _moving = false;
 
-    private Animator _animator;
     private AudioSource _audioSource;
 
-    private Vector3 _currentMoveDir;
+    protected Vector3 _currentMoveDir;
 
 
     private void Start()
     {
-        _animator = GetComponent<Animator>();
         _audioSource = GetComponent<AudioSource>();
-
-        if (_animator == null)
-        {
-            Debug.LogWarning("Could not find animator component");
-        }
 
         if (_audioSource == null)
         {
@@ -48,7 +43,7 @@ public class Enemy : MonoBehaviour
         CalculateMovment();
     }
 
-    void CalculateMovment()
+    public virtual void CalculateMovment()
     {
         Vector3 translationDir = Vector3.down + _currentMoveDir;
 
@@ -106,7 +101,8 @@ public class Enemy : MonoBehaviour
         {
             ProjectileBehavior laser = other.GetComponent<ProjectileBehavior>();
             laser.EnemyHit();
-            _animator.SetBool("isDestroyed", true);
+            //_animator.SetBool("isDestroyed", true);
+
             _speed = 0;
 
             if (Random.value <= 0.2)
@@ -114,16 +110,18 @@ public class Enemy : MonoBehaviour
                 Instantiate(_ammoCollectible, transform.position, Quaternion.identity);
             }
 
+            GameObject explosion = Instantiate(_explosionVFX, transform.position, Quaternion.identity);
             _audioSource.PlayOneShot(_explosionSFX);
+            Destroy(explosion, 2.5f);
             Destroy(GetComponent<Collider2D>());
-            Destroy(this.gameObject, 2.8f);
+            Destroy(this.gameObject, 0.5f);
         }
 
         else if (other.tag == "HeatedShot")
         {
             HeatedShotControl shot = other.GetComponent<HeatedShotControl>();
             shot.Explode();
-            _animator.SetBool("isDestroyed", true);
+            //_animator.SetBool("isDestroyed", true);
             _speed = 0;
 
             if (Random.value <= 0.2)
@@ -131,19 +129,24 @@ public class Enemy : MonoBehaviour
                 Instantiate(_ammoCollectible, transform.position, Quaternion.identity);
             }
 
+            GameObject explosion = Instantiate(_explosionVFX, transform.position, Quaternion.identity);
             _audioSource.PlayOneShot(_explosionSFX);
+            Destroy(explosion, 2.5f);
             Destroy(GetComponent<Collider2D>());
-            Destroy(this.gameObject, 2.8f);
+            Destroy(this.gameObject, 0.5f);
         }
 
         else if (other.tag == "Player")
         {
             Player player = other.GetComponent<Player>();
             player.HitByEnemy();
-            _animator.SetBool("isDestroyed", true);
+            //_animator.SetBool("isDestroyed", true);
             _speed = 0;
+            GameObject explosion = Instantiate(_explosionVFX, transform.position, Quaternion.identity);
             _audioSource.PlayOneShot(_explosionSFX);
-            Destroy(this.gameObject, 2.8f);
+            Destroy(explosion, 2.5f);
+            Destroy(GetComponent<Collider2D>());
+            Destroy(this.gameObject, 0.5f);
         }
 
     }

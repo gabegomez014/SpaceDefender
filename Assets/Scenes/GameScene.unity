@@ -6742,7 +6742,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83017e8537ca7684a9615293e6c53635, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemy: {fileID: 4955709519596888532, guid: 35c3555eb4de3634a8df4209af30f6da, type: 3}
+  _enemies:
+  - {fileID: 4955709519596888532, guid: 35c3555eb4de3634a8df4209af30f6da, type: 3}
+  - {fileID: 7337358785097158858, guid: 52a95d34745c0f04ba6c507a869c6c71, type: 3}
   _powerups:
   - {fileID: 6478738945236773289, guid: 3cbb3a1fc81121a4a841b10ea9e2734d, type: 3}
   - {fileID: 654747015445823891, guid: 8c45986f841fa924fb65fcc59b2ac22c, type: 3}
