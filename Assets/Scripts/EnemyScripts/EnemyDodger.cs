@@ -11,7 +11,7 @@ public class EnemyDodger : Enemy
     {
         RaycastHit2D hit = Physics2D.CircleCast(transform.position, 1.5f, Vector2.down, 10);
 
-        if (hit.collider.tag == "Laser" || hit.collider.tag == "HeatedShot")
+        if (hit.collider != null && (hit.collider.tag == "Laser" || hit.collider.tag == "HeatedShot"))
         {
             Vector3 projectileLocation = hit.point;
             if (transform.position.x <= projectileLocation.x)

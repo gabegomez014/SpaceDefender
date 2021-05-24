@@ -6745,6 +6745,7 @@ MonoBehaviour:
   _enemies:
   - {fileID: 4955709519596888532, guid: 35c3555eb4de3634a8df4209af30f6da, type: 3}
   - {fileID: 7337358785097158858, guid: 52a95d34745c0f04ba6c507a869c6c71, type: 3}
+  - {fileID: 1901240569949635970, guid: ca6206b824e1c194580619b9dc8eca20, type: 3}
   _powerups:
   - {fileID: 6478738945236773289, guid: 3cbb3a1fc81121a4a841b10ea9e2734d, type: 3}
   - {fileID: 654747015445823891, guid: 8c45986f841fa924fb65fcc59b2ac22c, type: 3}
@@ -7565,10 +7566,35 @@ PrefabInstance:
       propertyPath: _camManager
       value: 
       objectReference: {fileID: 622041194}
+    - target: {fileID: 2393030106136065791, guid: 5a44bdf089c6f984c8f4dd6970304d9b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 4247600277435418504, guid: 5a44bdf089c6f984c8f4dd6970304d9b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 4710677520948871174, guid: 5a44bdf089c6f984c8f4dd6970304d9b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 4800543558875313497, guid: 5a44bdf089c6f984c8f4dd6970304d9b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 4904939430186828813, guid: 5a44bdf089c6f984c8f4dd6970304d9b,
         type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 4904939430186828813, guid: 5a44bdf089c6f984c8f4dd6970304d9b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 7040005935213240769, guid: 5a44bdf089c6f984c8f4dd6970304d9b,
         type: 3}

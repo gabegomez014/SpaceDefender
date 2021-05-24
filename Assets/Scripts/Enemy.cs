@@ -5,6 +5,10 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     [SerializeField]
+    protected GameObject _laser;
+    [SerializeField]
+    protected AudioClip _laserSFX;
+    [SerializeField]
     protected float _speed = 5;
     [SerializeField]
     private AudioClip _explosionSFX;
@@ -12,6 +16,10 @@ public class Enemy : MonoBehaviour
     public GameObject _explosionVFX;
     [SerializeField]
     private GameObject _ammoCollectible;
+
+    [SerializeField]
+    protected float _shotCooldownTime = 0.3f;
+    protected float _currentShotCoolDownTimer = 0;
 
     protected float _bottomBound = -5.5f;
     protected float _topBound = 7;
@@ -22,7 +30,7 @@ public class Enemy : MonoBehaviour
 
     protected bool _moving = false;
 
-    private AudioSource _audioSource;
+    protected AudioSource _audioSource;
 
     protected Vector3 _currentMoveDir;
 
@@ -41,6 +49,7 @@ public class Enemy : MonoBehaviour
     void Update()
     {
         CalculateMovment();
+        ScanEnvironment();
     }
 
     public virtual void CalculateMovment()
@@ -95,13 +104,23 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    public virtual void ScanEnvironment()
+    {
+        // Do nothing for this main class at the moment
+    }
+
+    public virtual void Shoot()
+    {
+        //Do nothing for this main class at the moment
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag == "Laser")
         {
             ProjectileBehavior laser = other.GetComponent<ProjectileBehavior>();
+
             laser.EnemyHit();
-            //_animator.SetBool("isDestroyed", true);
 
             _speed = 0;
 

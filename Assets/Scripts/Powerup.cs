@@ -19,16 +19,54 @@ public class Powerup : MonoBehaviour
     private float _speed = 3;
     [SerializeField]
     private PowerupType _powerupType;
+    private bool _isMagnetized = false;
+    private Player _player;
+
+
+    private void Awake()
+    {
+        _player = GameObject.Find("Player").GetComponent<Player>(); 
+
+        if (_player == null)
+        {
+            Debug.LogWarning("Could not find the player script");
+        }
+    }
+
+    private void OnEnable()
+    {
+        Player.magnetizing = GettingMagnetized;
+        Player.notMagnetizing = NotMagnetized;
+    }
 
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(Vector3.down * Time.deltaTime * _speed);
+        if (_isMagnetized)
+        {
+            Vector3 directionToPlayer = _player.transform.position - transform.position;
+            transform.Translate(directionToPlayer.normalized * Time.deltaTime * _speed * 2); // Making the magnetizination attract the power-ups a bit faster than what they fall
+        }
+
+        else
+        {
+            transform.Translate(Vector3.down * Time.deltaTime * _speed);
+        }
 
         if (transform.position.y <= -6.3f)
         {
             Destroy(this.gameObject);
         }
+    }
+
+    public void GettingMagnetized()
+    {
+        _isMagnetized = true;
+    }
+
+    public void NotMagnetized()
+    {
+        _isMagnetized = false;
     }
 
     void OnTriggerEnter2D(Collider2D collision)

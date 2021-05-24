@@ -82,6 +82,13 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject _boostThrusters;
 
+    public delegate void Magnetizing();
+    public static Magnetizing magnetizing;
+
+    public delegate void NotMagnetizing();
+    public static NotMagnetizing notMagnetizing;
+
+
     void Start()
     {
         _uiManager = GameObject.Find("UIManager").GetComponent<UIManager>();
@@ -147,6 +154,10 @@ public class Player : MonoBehaviour
         {
             _currentCoolDownTimer -= Time.deltaTime;
         }
+
+        if (Input.GetKey(KeyCode.C)) { magnetizing(); }
+
+        else if (Input.GetKeyUp(KeyCode.C)) { notMagnetizing(); }
 
         if (Input.GetKey(KeyCode.Space)) { Shoot(); }
 
@@ -385,4 +396,5 @@ public class Player : MonoBehaviour
         _normalThrusters.SetActive(true);
         _systemOverrideActivated = false;
     }
+
 }
