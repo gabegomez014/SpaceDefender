@@ -6746,6 +6746,7 @@ MonoBehaviour:
   - {fileID: 4955709519596888532, guid: 35c3555eb4de3634a8df4209af30f6da, type: 3}
   - {fileID: 7337358785097158858, guid: 52a95d34745c0f04ba6c507a869c6c71, type: 3}
   - {fileID: 1901240569949635970, guid: ca6206b824e1c194580619b9dc8eca20, type: 3}
+  - {fileID: 7298222415797171339, guid: c969f207eef9abb438bc1d2fca9b6abc, type: 3}
   _powerups:
   - {fileID: 6478738945236773289, guid: 3cbb3a1fc81121a4a841b10ea9e2734d, type: 3}
   - {fileID: 654747015445823891, guid: 8c45986f841fa924fb65fcc59b2ac22c, type: 3}

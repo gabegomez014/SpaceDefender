@@ -7,6 +7,8 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     protected GameObject _laser;
     [SerializeField]
+    private GameObject _shieldPrefab;
+    [SerializeField]
     protected AudioClip _laserSFX;
     [SerializeField]
     protected float _speed = 5;
@@ -25,10 +27,14 @@ public class Enemy : MonoBehaviour
     protected float _topBound = 7;
     protected float _leftBound = -9.3f;
     protected float _rightBound = 9.3f;
-    protected float _moveCoolDown = 0;
-    protected float _timeMoving = 1f;
+    protected float _moveCoolDown = 0;  // Left and right movement on a cooldown so the enemy does not constantly move left and right
+    protected float _timeMoving = 1f;   // To keep track off how long the enemy will move to the left or right
 
     protected bool _moving = false;
+    protected bool _dead = false;
+    private bool _shieldActivated = false;
+
+    private GameObject _currentShield;
 
     protected AudioSource _audioSource;
 
@@ -43,6 +49,17 @@ public class Enemy : MonoBehaviour
         {
             Debug.LogWarning("Could not find Audio Source component");
         }
+
+        // Check to see if our enemy gets a shield
+        if (Random.value <= 0.25f)
+        {
+            _currentShield = Instantiate(_shieldPrefab, transform.position,Quaternion.identity, transform);
+            if (transform.name == "TheDodgerEnemy(Clone)")
+            {
+                _currentShield.transform.localPosition = new Vector3(0, 2.1f, 0);
+            }
+            _shieldActivated = true;
+        }
     }
 
     // Update is called once per frame
@@ -54,6 +71,8 @@ public class Enemy : MonoBehaviour
 
     public virtual void CalculateMovment()
     {
+        if (_dead) { return; }
+
         Vector3 translationDir = Vector3.down + _currentMoveDir;
 
         // 25% chance enemy moves left
@@ -118,10 +137,17 @@ public class Enemy : MonoBehaviour
     {
         if (other.tag == "Laser")
         {
+            if (_shieldActivated)
+            {
+                _shieldActivated = false;
+                Destroy(_currentShield);
+                return;
+            }
+
             ProjectileBehavior laser = other.GetComponent<ProjectileBehavior>();
 
             laser.EnemyHit();
-
+            _dead = true;
             _speed = 0;
 
             if (Random.value <= 0.2)
@@ -138,9 +164,16 @@ public class Enemy : MonoBehaviour
 
         else if (other.tag == "HeatedShot")
         {
+            if (_shieldActivated)
+            {
+                _shieldActivated = false;
+                Destroy(_currentShield);
+                return;
+            }
+
             HeatedShotControl shot = other.GetComponent<HeatedShotControl>();
             shot.Explode();
-            //_animator.SetBool("isDestroyed", true);
+            _dead = true;
             _speed = 0;
 
             if (Random.value <= 0.2)
@@ -158,8 +191,17 @@ public class Enemy : MonoBehaviour
         else if (other.tag == "Player")
         {
             Player player = other.GetComponent<Player>();
+
+            if (_shieldActivated)
+            {
+                _shieldActivated = false;
+                Destroy(_currentShield);
+                player.HitByEnemy();
+                return;
+            }
+
             player.HitByEnemy();
-            //_animator.SetBool("isDestroyed", true);
+            _dead = true;
             _speed = 0;
             GameObject explosion = Instantiate(_explosionVFX, transform.position, Quaternion.identity);
             _audioSource.PlayOneShot(_explosionSFX);

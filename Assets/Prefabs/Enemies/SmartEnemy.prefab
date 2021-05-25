@@ -231,6 +231,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _laser: {fileID: 787597789330105059, guid: f5f6282a876dbe4448fc0c91802277b1, type: 3}
+  _shieldPrefab: {fileID: 5751568570251278703, guid: 3c8a4d074aae96f4fbb25830ad5ba951,
+    type: 3}
   _laserSFX: {fileID: 8300000, guid: 9798acacf6bad0145bd58f01fdda7ca0, type: 3}
   _speed: 3
   _explosionSFX: {fileID: 8300000, guid: a885c043fab7e46438bba03ba9dab6bc, type: 3}
