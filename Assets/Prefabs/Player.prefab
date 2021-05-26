@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8198750077732425829}
   - component: {fileID: 5677319635039722184}
   - component: {fileID: 1518557030140781805}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: ComponentFire0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -69,7 +69,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 287814611
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 371fa23a16c2b470dbbdf50d24a9c247, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -112,7 +112,7 @@ GameObject:
   - component: {fileID: 2235595371814954910}
   - component: {fileID: 8131883186663573240}
   - component: {fileID: 145155039}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: BigThrusters
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -170,7 +170,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 287814611
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 4daf6b7e6834bac4c80829b322f58ee1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -213,7 +213,7 @@ GameObject:
   - component: {fileID: 4431478301531020423}
   - component: {fileID: 8392743657585765914}
   - component: {fileID: 1351983362602495183}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: ComponentFire1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -271,7 +271,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 287814611
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 371fa23a16c2b470dbbdf50d24a9c247, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -314,7 +314,7 @@ GameObject:
   - component: {fileID: 8912155482229061095}
   - component: {fileID: 8096487137926649032}
   - component: {fileID: 675141745}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SmallThrusters
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -372,7 +372,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 287814611
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 77da1eea0eaf8d94e809cd5124aae273, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -417,7 +417,7 @@ GameObject:
   - component: {fileID: 2900678830547512359}
   - component: {fileID: 2395761064252408607}
   - component: {fileID: 241336512726484127}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -479,7 +479,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1990960703
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 5155a3bafdfefa04bbda1e9333bac143, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -633,6 +633,8 @@ MonoBehaviour:
   tripleShotPrefab: {fileID: 1653688420710009208, guid: c18f4f871d41a2e44a44698d1acb0b67,
     type: 3}
   heatedShotPrefab: {fileID: 3053744295549741995, guid: de89f9a77629fde44be39aeda20a2108,
+    type: 3}
+  homingMisslePrefab: {fileID: 1048630709500085621, guid: c0d4e14edab19c34c8bf05d028f9648f,
     type: 3}
   shieldPrefabs:
   - {fileID: 4461858357952738883, guid: b713d8d53765b9d48a0fd4d1b9d2b4e1, type: 3}

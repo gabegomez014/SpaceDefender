@@ -5,8 +5,8 @@ using UnityEngine;
 public class ProjectileBehavior : MonoBehaviour
 {
     [SerializeField]
-    private float _speed = 10;
-    private Vector2 _shotDirection;
+    protected float _speed = 10;
+    protected Vector2 _shotDirection;
 
     private UIManager _uiManager;
 
@@ -52,7 +52,7 @@ public class ProjectileBehavior : MonoBehaviour
         _shotDirection = dir;
     }
 
-    void CalculateMovement()
+    public virtual void CalculateMovement()
     {
         transform.Translate(_shotDirection * Time.deltaTime * _speed);
 

@@ -32,6 +32,7 @@ public class Enemy : MonoBehaviour
 
     protected bool _moving = false;
     protected bool _dead = false;
+    private bool _beingTracked = false;
     private bool _shieldActivated = false;
 
     private GameObject _currentShield;
@@ -91,6 +92,16 @@ public class Enemy : MonoBehaviour
         {
             _currentShotCoolDownTimer -= Time.deltaTime;
         }
+    }
+
+    public bool GetTrackedStatus()
+    {
+        return _beingTracked;
+    }
+
+    public void SetTrackedStatus(bool status)
+    {
+        _beingTracked = status;
     }
 
     public virtual void CalculateMovment()
@@ -182,6 +193,7 @@ public class Enemy : MonoBehaviour
             {
                 _shieldActivated = false;
                 Destroy(_currentShield);
+                Destroy(other.gameObject);
                 return;
             }
 

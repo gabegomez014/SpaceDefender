@@ -20,6 +20,7 @@ public class Player : MonoBehaviour
     public GameObject projectile;
     public GameObject tripleShotPrefab;
     public GameObject heatedShotPrefab;
+    public GameObject homingMisslePrefab;
     public GameObject[] shieldPrefabs;
 
     public AudioClip laserShotSFX;
@@ -63,6 +64,7 @@ public class Player : MonoBehaviour
     private bool _shieldActivated = false;
     private bool _heatedShotActivated = false;
     private bool _systemOverrideActivated = false;
+    private bool _homingMissileActivated = false;
 
     private SpawnManager _spawnManager;
 
@@ -203,6 +205,12 @@ public class Player : MonoBehaviour
             else if (_heatedShotActivated)
             {
                 Instantiate(heatedShotPrefab, spawnLocation, Quaternion.identity);
+                _audioSource.PlayOneShot(laserShotSFX);
+            }
+
+            else if (_homingMissileActivated)
+            {
+                Instantiate(homingMisslePrefab, spawnLocation, Quaternion.identity);
                 _audioSource.PlayOneShot(laserShotSFX);
             }
 
@@ -368,6 +376,12 @@ public class Player : MonoBehaviour
             StartCoroutine(SystemOverridePowerdownRoutine());
         }
 
+        else if (powerupType == PowerupType.HOMING)
+        {
+            _homingMissileActivated = true;
+            StartCoroutine(HomingMisslePowerdownRoutine());
+        }
+
         _audioSource.PlayOneShot(_powerupSFX);
     }
 
@@ -395,6 +409,12 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(2);
         _normalThrusters.SetActive(true);
         _systemOverrideActivated = false;
+    }
+
+    IEnumerator HomingMisslePowerdownRoutine()
+    {
+        yield return new WaitForSeconds(5);
+        _homingMissileActivated = false;
     }
 
 }

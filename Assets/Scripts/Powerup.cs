@@ -10,7 +10,8 @@ public enum PowerupType
     HEALTH,
     AMMO,
     HEATEDSHOT,
-    SYSTEMOVERRIDE
+    SYSTEMOVERRIDE,
+    HOMING
 }
 
 public class Powerup : MonoBehaviour
