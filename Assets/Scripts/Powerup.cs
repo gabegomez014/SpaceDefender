@@ -77,5 +77,11 @@ public class Powerup : MonoBehaviour
             player.PowerupCollected(_powerupType);
             Destroy(this.gameObject);
         }
+
+        else if (collision.tag == "Enemylaser")
+        {
+            Destroy(collision.gameObject);
+            Destroy(this.gameObject);
+        }
     }
 }

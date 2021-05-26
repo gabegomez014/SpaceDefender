@@ -28,6 +28,8 @@ public class AggressiveEnemy : Enemy
             _enemySighted = true;
             StartCoroutine(RamAction());
         }
+
+        base.ScanEnvironment();
     }
 
     private IEnumerator RamAction()

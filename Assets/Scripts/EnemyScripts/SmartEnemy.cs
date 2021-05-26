@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class SmartEnemy : Enemy
 {
+    [SerializeField]
+    private GameObject _multiDirectionShot;
+
     private Vector2 _directionToShoot;
 
     public override void ScanEnvironment()
@@ -40,19 +43,24 @@ public class SmartEnemy : Enemy
             Shoot();
         }
 
-        else
-        {
-            _currentShotCoolDownTimer -= Time.deltaTime;
-        }
+        base.ScanEnvironment();
     }
 
     public override void Shoot()
     {  
-        ProjectileBehavior laser = Instantiate(_laser, transform.position, Quaternion.identity).GetComponent<ProjectileBehavior>();
-        laser.SetShotDirection(_directionToShoot);
-        _audioSource.PlayOneShot(_laserSFX, 0.75f);
+        if (_directionToShoot.magnitude == 0)
+        {
+            base.Shoot();
+        }
 
-        _currentShotCoolDownTimer = _shotCooldownTime;
-        _directionToShoot = new Vector2(0, 0);
+        else
+        {
+            ProjectileBehavior laser = Instantiate(_multiDirectionShot, transform.position, Quaternion.identity).GetComponent<ProjectileBehavior>();
+            laser.SetShotDirection(_directionToShoot);
+            _audioSource.PlayOneShot(_laserSFX, 0.75f);
+
+            _currentShotCoolDownTimer = _shotCooldownTime;
+            _directionToShoot = new Vector2(0, 0);
+        }
     }
 }

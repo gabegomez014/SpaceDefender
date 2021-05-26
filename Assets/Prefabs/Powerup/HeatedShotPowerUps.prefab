@@ -14,9 +14,9 @@ GameObject:
   - component: {fileID: 7448964947382413991}
   - component: {fileID: 7800481572937560782}
   - component: {fileID: 4523126175910120969}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: HeatedShotPowerUps
-  m_TagString: Untagged
+  m_TagString: Powerup
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -178,7 +178,7 @@ GameObject:
   - component: {fileID: 2685627679989639877}
   - component: {fileID: 2685627679989639878}
   - component: {fileID: 2685627679989639879}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Powerup Wings
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -279,7 +279,7 @@ GameObject:
   - component: {fileID: 1866541796620103026}
   - component: {fileID: 815873267705442765}
   - component: {fileID: 3196403764714217165}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Lights
   m_TagString: Untagged
   m_Icon: {fileID: 0}

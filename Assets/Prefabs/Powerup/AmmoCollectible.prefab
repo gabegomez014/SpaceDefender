@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1005757641746853296}
   - component: {fileID: 1005757641746853299}
   - component: {fileID: 1005757641746853298}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Powerup Wings
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -69,7 +69,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1990960703
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 36f2d5d04fc95a443b02fc03942b8b8e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -115,9 +115,9 @@ GameObject:
   - component: {fileID: 5751208037085425106}
   - component: {fileID: 4967628388507710907}
   - component: {fileID: 1618252763742685564}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: AmmoCollectible
-  m_TagString: Untagged
+  m_TagString: Powerup
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -174,7 +174,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1990960703
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 4b0ed75ee6daea441b92136a8cfaef4b, type: 3}
   m_Color: {r: 0.9528302, g: 0.9528302, b: 0.9528302, a: 1}

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ProjectileBehavior : MonoBehaviour
 {
+    [SerializeField]
     private float _speed = 10;
     private Vector2 _shotDirection;
 

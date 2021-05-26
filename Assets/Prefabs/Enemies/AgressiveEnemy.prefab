@@ -144,7 +144,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a60af721442c66244b4004dbfea832fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _laser: {fileID: 0}
+  _laser: {fileID: 5405130893009089928, guid: 3483b755fbdd00b4b98edd66dbbda662, type: 3}
   _shieldPrefab: {fileID: 5598900612214240191, guid: 3afdffe0a5ec45c408960fbad3a087b1,
     type: 3}
   _laserSFX: {fileID: 0}

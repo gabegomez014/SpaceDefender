@@ -43,11 +43,16 @@ public class Enemy : MonoBehaviour
 
     private void Start()
     {
-        _audioSource = GetComponent<AudioSource>();
 
+        // Doing this twice because I got a weird error a few times where the audio source is not found, but no warning is thrown
         if (_audioSource == null)
         {
-            Debug.LogWarning("Could not find Audio Source component");
+            _audioSource = GetComponent<AudioSource>();
+
+            if (_audioSource == null)
+            {
+                Debug.LogWarning("Could not find Audio Source component");
+            }
         }
 
         // Check to see if our enemy gets a shield
@@ -62,11 +67,30 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    private void OnEnable()
+    {
+        if (_audioSource == null)
+        {
+            _audioSource = GetComponent<AudioSource>();
+
+            if (_audioSource == null)
+            {
+                Debug.LogWarning("Could not find Audio Source component");
+            }
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
         CalculateMovment();
         ScanEnvironment();
+
+        
+        if (_currentShotCoolDownTimer > 0)
+        {
+            _currentShotCoolDownTimer -= Time.deltaTime;
+        }
     }
 
     public virtual void CalculateMovment()
@@ -125,12 +149,29 @@ public class Enemy : MonoBehaviour
 
     public virtual void ScanEnvironment()
     {
-        // Do nothing for this main class at the moment
+        LayerMask mask = LayerMask.GetMask("Powerup");
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 10, mask);
+
+        if (hit.collider != null && hit.collider.tag == "Powerup")
+        {
+            if (_dead)
+            {
+                //This is for when an enemy drops an ammo collectible on death so they cannot destroy that collectible.
+                return;
+            }
+
+            if (_currentShotCoolDownTimer <= 0)
+            {
+                Shoot();
+            }
+        }
     }
 
     public virtual void Shoot()
     {
-        //Do nothing for this main class at the moment
+        Instantiate(_laser, transform.position, Quaternion.identity);
+        _audioSource.PlayOneShot(_laserSFX);
+        _currentShotCoolDownTimer = 3;
     }
 
     private void OnTriggerEnter2D(Collider2D other)

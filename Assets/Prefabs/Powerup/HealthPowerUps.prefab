@@ -14,9 +14,9 @@ GameObject:
   - component: {fileID: 5418796768655195991}
   - component: {fileID: 4617179716854933310}
   - component: {fileID: 1339323492835679225}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: HealthPowerUps
-  m_TagString: Untagged
+  m_TagString: Powerup
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -73,7 +73,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1990960703
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 17dc2c7454274f14c8cc57aa6b78f9bf, type: 3}
   m_Color: {r: 0.9528302, g: 0.9528302, b: 0.9528302, a: 1}
@@ -177,7 +177,7 @@ GameObject:
   - component: {fileID: 654747016900362037}
   - component: {fileID: 654747016900362038}
   - component: {fileID: 654747016900362039}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Powerup Wings
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -235,7 +235,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1990960703
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 36f2d5d04fc95a443b02fc03942b8b8e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
