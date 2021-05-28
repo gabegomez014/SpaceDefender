@@ -1,11 +1,14 @@
-﻿using System.Collections;
+﻿using System.Linq;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
     [SerializeField]
-    private GameObject[] _enemies;
+    private UIManager _uiManager;
+    [SerializeField]
+    private WaveStruct[] _waves;
     [SerializeField]
     private GameObject[] _powerups;
     [SerializeField]
@@ -18,18 +21,23 @@ public class SpawnManager : MonoBehaviour
     [SerializeField]
     private Transform _powerupHolder;
 
+    private List<GameObject> _enemiesThisWave;
+
     [SerializeField]
     private float _spawnRate = 3;
+
+    private int _currentWave = 0;
 
     private float _topBound = 7;
     private float _leftBound = -9.3f;
     private float _rightBound = 9.3f;
+    private float _spawnDelay = 1.5f;
 
     private bool _keepSpawning = true;
 
     IEnumerator SpawnPowerups()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(_spawnDelay);
 
         while (_keepSpawning)
         {
@@ -61,15 +69,46 @@ public class SpawnManager : MonoBehaviour
 
     IEnumerator SpawnEnemies() 
     {
-        yield return new WaitForSeconds(0.25f);
+        yield return new WaitForSeconds(_spawnDelay);
+        _enemiesThisWave = _waves[_currentWave].GetEnemies();
 
         while (_keepSpawning)
         {
+            if (_enemiesThisWave.Count == 0)
+            {
+
+                //Check to see if the player has killed all enemies for this wave
+                if (_enemyHolder.childCount == 0)
+                {
+                    _currentWave += 1;
+
+                    if (_currentWave == _waves.Length)
+                    {
+                        // Player has beat the game!
+                        _keepSpawning = false;
+                        _uiManager.PlayerWon();
+                        break;
+                    }
+                    _enemiesThisWave = _waves[_currentWave].GetEnemies();
+                    _uiManager.UpdateWave(_currentWave + 1);
+
+                    yield return new WaitForSeconds(1);
+                }
+
+                else
+                {
+                    // do nothing until the player beats the current wave
+                    yield return new WaitForSeconds(0.25f);
+                    continue;
+                }
+            }
+
             Vector3 spawnPos = new Vector3(Random.Range(_leftBound, _rightBound), _topBound);
             GameObject enemyToSpawn;
-            int enemyType = Random.Range(0, _enemies.Length);
-            enemyToSpawn = _enemies[enemyType];
+            int enemyType = Random.Range(0, _enemiesThisWave.Count);
+            enemyToSpawn = _enemiesThisWave[enemyType];
             Instantiate(enemyToSpawn, spawnPos, Quaternion.identity, _enemyHolder);
+            _enemiesThisWave.RemoveAt(enemyType);
             yield return new WaitForSeconds(_spawnRate);
         }
     }
@@ -90,6 +129,7 @@ public class SpawnManager : MonoBehaviour
 
     public void StartSpawning()
     {
+        _uiManager.UpdateWave(_currentWave + 1);
         StartCoroutine(SpawnPowerups());
         StartCoroutine(SpawnEnemies());
         StartCoroutine(SpawnPlanets());

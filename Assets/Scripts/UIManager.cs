@@ -18,6 +18,10 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Text _ammoText;
     [SerializeField]
+    private Text _winText;
+    [SerializeField]
+    private Text _waveText;
+    [SerializeField]
     private GameObject _pauseScreen;
 
     [SerializeField]
@@ -99,6 +103,15 @@ public class UIManager : MonoBehaviour
         _livesDisplay.sprite = _livesSprites[lives];
     }
 
+    public void PlayerWon()
+    {
+        // Bring up Win Screen UI for the player
+        _winText.gameObject.SetActive(true);
+        _restartText.gameObject.SetActive(true);
+        _isGameOver = true;
+        StartCoroutine(WinFlicker());
+    }
+
     public void ContinueGame()
     {
         _pauseScreen.SetActive(false);
@@ -108,6 +121,12 @@ public class UIManager : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
+    }
+
+    public void UpdateWave(int currentWave)
+    {
+        _waveText.text = "Wave " + currentWave;
+        StartCoroutine(WavePresentation());
     }
 
     IEnumerator GameOverFlicker()
@@ -121,5 +140,26 @@ public class UIManager : MonoBehaviour
             yield return new WaitForSeconds(0.4f);
         }
 
+    }
+
+    IEnumerator WinFlicker()
+    {
+
+        while (_isGameOver)
+        {
+            _winText.text = "You Win!";
+            yield return new WaitForSeconds(0.4f);
+            _winText.text = "";
+            yield return new WaitForSeconds(0.4f);
+        }
+
+    }
+
+    IEnumerator WavePresentation()
+    {
+        _waveText.gameObject.SetActive(true);
+        yield return new WaitForSeconds(1.5f);
+        _waveText.gameObject.SetActive(false);
+           
     }
 }
