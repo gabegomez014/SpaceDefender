@@ -28,7 +28,6 @@ public class PreBossEnemy : Enemy
 
         if (transform.position.y <= _bottomBound && _attackingPlayer)
         {
-            Debug.Log("In here");
             _attackingPlayer = false;
             StopCoroutine(_laserCoroutine);
             Destroy(_currentlyInstantiatedGameObject);

@@ -13,7 +13,7 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     protected float _speed = 5;
     [SerializeField]
-    private AudioClip _explosionSFX;
+    protected AudioClip _explosionSFX;
     [SerializeField]
     public GameObject _explosionVFX;
     [SerializeField]
@@ -87,7 +87,6 @@ public class Enemy : MonoBehaviour
         CalculateMovment();
         ScanEnvironment();
 
-        
         if (_currentShotCoolDownTimer > 0)
         {
             _currentShotCoolDownTimer -= Time.deltaTime;
@@ -178,6 +177,30 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    public virtual void TakeDamage()
+    {
+        if (_shieldActivated)
+        {
+            _shieldActivated = false;
+            Destroy(_currentShield);
+            return;
+        }
+
+        _dead = true;
+        _speed = 0;
+
+        if (Random.value <= 0.2)
+        {
+            Instantiate(_ammoCollectible, transform.position, Quaternion.identity);
+        }
+
+        GameObject explosion = Instantiate(_explosionVFX, transform.position, Quaternion.identity);
+        _audioSource.PlayOneShot(_explosionSFX);
+        Destroy(explosion, 2.5f);
+        Destroy(GetComponent<Collider2D>());
+        Destroy(this.gameObject, 0.5f);
+    }
+
     public virtual void Shoot()
     {
         Instantiate(_laser, transform.position, Quaternion.identity);
@@ -189,56 +212,19 @@ public class Enemy : MonoBehaviour
     {
         if (other.tag == "Laser")
         {
-            if (_shieldActivated)
-            {
-                _shieldActivated = false;
-                Destroy(_currentShield);
-                Destroy(other.gameObject);
-                return;
-            }
-
             ProjectileBehavior laser = other.GetComponent<ProjectileBehavior>();
 
             laser.EnemyHit();
-            _dead = true;
-            _speed = 0;
 
-            if (Random.value <= 0.2)
-            {
-                Instantiate(_ammoCollectible, transform.position, Quaternion.identity);
-            }
-
-            GameObject explosion = Instantiate(_explosionVFX, transform.position, Quaternion.identity);
-            _audioSource.PlayOneShot(_explosionSFX);
-            Destroy(explosion, 2.5f);
-            Destroy(GetComponent<Collider2D>());
-            Destroy(this.gameObject, 0.5f);
+            TakeDamage();
         }
 
         else if (other.tag == "HeatedShot")
         {
-            if (_shieldActivated)
-            {
-                _shieldActivated = false;
-                Destroy(_currentShield);
-                return;
-            }
-
             HeatedShotControl shot = other.GetComponent<HeatedShotControl>();
             shot.Explode();
-            _dead = true;
-            _speed = 0;
 
-            if (Random.value <= 0.2)
-            {
-                Instantiate(_ammoCollectible, transform.position, Quaternion.identity);
-            }
-
-            GameObject explosion = Instantiate(_explosionVFX, transform.position, Quaternion.identity);
-            _audioSource.PlayOneShot(_explosionSFX);
-            Destroy(explosion, 2.5f);
-            Destroy(GetComponent<Collider2D>());
-            Destroy(this.gameObject, 0.5f);
+            TakeDamage();
         }
 
         else if (other.tag == "Player")

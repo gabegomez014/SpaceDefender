@@ -104,6 +104,12 @@ public class SpawnManager : MonoBehaviour
             }
 
             Vector3 spawnPos = new Vector3(Random.Range(_leftBound, _rightBound), _topBound);
+
+            if (_currentWave + 1 == _waves.Length)
+            {
+                spawnPos.x = 0;
+            }
+
             GameObject enemyToSpawn;
             int enemyType = Random.Range(0, _enemiesThisWave.Count);
             enemyToSpawn = _enemiesThisWave[enemyType];
@@ -129,6 +135,7 @@ public class SpawnManager : MonoBehaviour
 
     public void StartSpawning()
     {
+        _uiManager.SetFinalWave(_waves.Length);
         _uiManager.UpdateWave(_currentWave + 1);
         StartCoroutine(SpawnPowerups());
         StartCoroutine(SpawnEnemies());

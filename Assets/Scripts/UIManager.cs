@@ -23,6 +23,8 @@ public class UIManager : MonoBehaviour
     private Text _waveText;
     [SerializeField]
     private GameObject _pauseScreen;
+    [SerializeField]
+    private GameObject _bossHealthBar;
 
     [SerializeField]
     private GameObject _playerPrefab;   
@@ -33,6 +35,7 @@ public class UIManager : MonoBehaviour
     private SpawnManager _spawnManager;
 
     private int _currentScore = 0;
+    private int _finalWave;
 
     private bool _isGameOver = false;
 
@@ -125,8 +128,23 @@ public class UIManager : MonoBehaviour
 
     public void UpdateWave(int currentWave)
     {
-        _waveText.text = "Wave " + currentWave;
+        if (currentWave == _finalWave)
+        {
+            _waveText.text = "Final Wave";
+            _bossHealthBar.SetActive(true);
+        }
+
+        else
+        {
+            _waveText.text = "Wave " + currentWave;
+        }
+
         StartCoroutine(WavePresentation());
+    }
+
+    public void SetFinalWave(int finalWave)
+    {
+        _finalWave = finalWave;
     }
 
     IEnumerator GameOverFlicker()
