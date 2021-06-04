@@ -7025,7 +7025,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _uiManager: {fileID: 1737242983}
+  _player: {fileID: 637336330872538207}
   _waves:
+  - _enemies:
+    - {fileID: 4955709519596888532, guid: 35c3555eb4de3634a8df4209af30f6da, type: 3}
+    - {fileID: 4955709519596888532, guid: 35c3555eb4de3634a8df4209af30f6da, type: 3}
+    - {fileID: 4955709519596888532, guid: 35c3555eb4de3634a8df4209af30f6da, type: 3}
+    - {fileID: 4955709519596888532, guid: 35c3555eb4de3634a8df4209af30f6da, type: 3}
+    - {fileID: 4955709519596888532, guid: 35c3555eb4de3634a8df4209af30f6da, type: 3}
   - _enemies:
     - {fileID: 8128518469324359075, guid: c0336050381d68c45988e3f37405813a, type: 3}
   _powerups:
@@ -7959,8 +7966,8 @@ MonoBehaviour:
   laserShotSFX: {fileID: 8300000, guid: 75676f361bdfeaf41a46623e95df3dbc, type: 3}
   outOfAmmoSFX: {fileID: 8300000, guid: 07d01d06177e7cc44a77ffb0a65d39a7, type: 3}
   _powerupSFX: {fileID: 8300000, guid: 5ee343246919d2b4bba63ae629e95494, type: 3}
-  speedPowerupMultiplier: 5
-  _cooldownTime: 0.2
+  speedPowerupMultiplier: 4
+  _cooldownTime: 0.25
   _boostChargeMeter: {fileID: 1035450459}
   _camManager: {fileID: 622041194}
   _maxBoostCharge: 3

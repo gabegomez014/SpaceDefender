@@ -164,7 +164,6 @@ public class BossEnemy : Enemy
         {
             int vfxToActivate = (_maxHealth - _currentHealth) - 1;
             this.transform.GetChild(vfxToActivate).gameObject.SetActive(true);
-            
             _healthBar.fillAmount = (float) _currentHealth / _maxHealth;
         }
     }

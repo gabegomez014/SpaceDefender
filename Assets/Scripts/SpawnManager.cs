@@ -8,6 +8,8 @@ public class SpawnManager : MonoBehaviour
     [SerializeField]
     private UIManager _uiManager;
     [SerializeField]
+    private Player _player;
+    [SerializeField]
     private WaveStruct[] _waves;
     [SerializeField]
     private GameObject[] _powerups;
@@ -89,6 +91,12 @@ public class SpawnManager : MonoBehaviour
                         _uiManager.PlayerWon();
                         break;
                     }
+
+                    else if (_currentWave == _waves.Length - 1)
+                    {
+                        _player.BossIncoming();
+                    }
+
                     _enemiesThisWave = _waves[_currentWave].GetEnemies();
                     _uiManager.UpdateWave(_currentWave + 1);
 

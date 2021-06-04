@@ -49,6 +49,7 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     private float _boostRechargeRate;
+    private float _boostDischargeRate = 3;
     private float _topBounds = 0;
     private float _bottomBounds = -4;
     private float _rightBounds = 9.3f;
@@ -65,6 +66,7 @@ public class Player : MonoBehaviour
     private bool _heatedShotActivated = false;
     private bool _systemOverrideActivated = false;
     private bool _homingMissileActivated = false;
+    private bool _bossSequencePlaying = false;
 
     private SpawnManager _spawnManager;
 
@@ -113,6 +115,8 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (_bossSequencePlaying) { return; }
+
         // Code to switch boostActivated boolean
         if (Input.GetKey(KeyCode.LeftShift) && !_systemOverrideActivated)
         {
@@ -125,7 +129,7 @@ public class Player : MonoBehaviour
         {
             if (_currentBoostCharge > 0)
             {
-                _currentBoostCharge -= Time.deltaTime;
+                _currentBoostCharge -= Time.deltaTime * _boostDischargeRate;
             }
 
             else
@@ -212,6 +216,7 @@ public class Player : MonoBehaviour
             {
                 Instantiate(homingMisslePrefab, spawnLocation, Quaternion.identity);
                 _audioSource.PlayOneShot(laserShotSFX);
+                _currentCoolDownTimer += 0.25f; // Adding a bit more time between shots for the homing missiles
             }
 
             else if (_ammoCount > 0)
@@ -385,6 +390,13 @@ public class Player : MonoBehaviour
         _audioSource.PlayOneShot(_powerupSFX);
     }
 
+    public void BossIncoming()
+    {
+        Debug.Log("Getting here");
+        _bossSequencePlaying = true;
+        StartCoroutine(BossIntroSequencePlayerPrevention());
+    }
+
     IEnumerator TripleShotPowerDownRoutine()
     {
         yield return new WaitForSeconds(3);
@@ -415,6 +427,12 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(5);
         _homingMissileActivated = false;
+    }
+
+    IEnumerator BossIntroSequencePlayerPrevention()
+    {
+        yield return new WaitForSeconds(2f);
+        _bossSequencePlaying = false;
     }
 
 }
