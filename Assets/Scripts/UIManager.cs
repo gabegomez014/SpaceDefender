@@ -25,7 +25,8 @@ public class UIManager : MonoBehaviour
     private GameObject _pauseScreen;
     [SerializeField]
     private GameObject _bossHealthBar;
-
+    [SerializeField]
+    private GameObject _endGameLights;
     [SerializeField]
     private GameObject _playerPrefab;   
 
@@ -111,6 +112,7 @@ public class UIManager : MonoBehaviour
         // Bring up Win Screen UI for the player
         _winText.gameObject.SetActive(true);
         _restartText.gameObject.SetActive(true);
+        _endGameLights.SetActive(true);
         _isGameOver = true;
         StartCoroutine(WinFlicker());
     }

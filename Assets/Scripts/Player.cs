@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 enum Directions
@@ -77,6 +78,7 @@ public class Player : MonoBehaviour
     private int _ammoCount = 15;
 
     private GameObject _currentActivatedShield;
+    private GameObject _currentMagnetFX;
     [SerializeField]
     private GameObject _rightEngineFire;
     [SerializeField]
@@ -85,6 +87,8 @@ public class Player : MonoBehaviour
     private GameObject _normalThrusters;
     [SerializeField]
     private GameObject _boostThrusters;
+    [SerializeField]
+    private GameObject _magnetizingFX;
 
     public delegate void Magnetizing();
     public static Magnetizing magnetizing;
@@ -115,7 +119,7 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (_bossSequencePlaying) { return; }
+        if (_bossSequencePlaying || SceneManager.GetActiveScene().name == "MainMenuScene") { return; }
 
         // Code to switch boostActivated boolean
         if (Input.GetKey(KeyCode.LeftShift) && !_systemOverrideActivated)
@@ -161,14 +165,25 @@ public class Player : MonoBehaviour
             _currentCoolDownTimer -= Time.deltaTime;
         }
 
-        if (Input.GetKey(KeyCode.C)) { magnetizing(); }
-
-        else if (Input.GetKeyUp(KeyCode.C)) { notMagnetizing(); }
-
-        if (Input.GetKey(KeyCode.Space)) { Shoot(); }
-
         // Calculate Player movements given User Input
         CalculatePlayerMovement();
+
+        if (Input.GetKey(KeyCode.C))
+        {
+            if (_currentMagnetFX == null)
+            {
+                _currentMagnetFX = Instantiate(_magnetizingFX, transform.position, Quaternion.identity, this.transform);
+            }
+            magnetizing();
+        }
+
+        else if (Input.GetKeyUp(KeyCode.C))
+        {
+            Destroy(_currentMagnetFX);
+            notMagnetizing();
+        }
+
+        if (Input.GetKey(KeyCode.Space)) { Shoot(); }
     }
 
     void UpdateBoostMeter()
