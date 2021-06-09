@@ -125,7 +125,11 @@ public class UIManager : MonoBehaviour
 
     public void QuitGame()
     {
-        Application.Quit();
+        // The below is good if on standalone
+        //Application.Quit();
+
+        // For WebGL build, we do the following
+        SceneManager.LoadScene(0);
     }
 
     public void UpdateWave(int currentWave)

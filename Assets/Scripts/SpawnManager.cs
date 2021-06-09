@@ -39,7 +39,7 @@ public class SpawnManager : MonoBehaviour
 
     IEnumerator SpawnPowerups()
     {
-        yield return new WaitForSeconds(_spawnDelay);
+        yield return new WaitForSeconds(_spawnDelay/2);
 
         while (_keepSpawning)
         {
