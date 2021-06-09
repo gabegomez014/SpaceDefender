@@ -3,7 +3,12 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Laser
+  - Enemy
+  - Powerup
+  - HeatedShot
+  - Enemylaser
   layers:
   - Default
   - TransparentFX
@@ -13,9 +18,9 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
+  - Post Processing
+  - Player
+  - Powerup
   - 
   - 
   - 
@@ -40,4 +45,16 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 2215211621
+    locked: 0
+  - name: MidGround
+    uniqueID: 1503332413
+    locked: 0
+  - name: Foreground
+    uniqueID: 2304006593
+    locked: 0
+  - name: Foreground-Top
+    uniqueID: 287814611
     locked: 0
